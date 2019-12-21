@@ -81,10 +81,6 @@ function setMouseDown(mouseDown){
     // console.log(game.mouseDown)
 }
 
-function pathMouseDown(el){
-    game.mouseDown = true;
-}
-
 function checkDifferent(index){
     for(var i = 0; i < game.path.length-1; i++)
     {
@@ -95,7 +91,7 @@ function checkDifferent(index){
     return true;
 }
 
-function checkPath(el){
+function checkDrawPath(el){
     if(game.mouseDown == true){
         x = indexInClass(el)%grid.width
         y = indexInClass(el.parentElement)
@@ -178,7 +174,7 @@ function addEventListeners(){
 
     for(i=0; i<gridBlocks.length; i++){
         gridBlocks[i].addEventListener("mouseenter", function(event){
-            checkPath(this);
+            checkDrawPath(this);
         })
     }
 
@@ -192,8 +188,7 @@ function bindPath(){
 
     for(i=0; i<pathBlocks.length; i++){
         pathBlocks[i].addEventListener("mousedown", function(event){
-            // setMouseDown(true);
-            pathMouseDown(this);
+            setMouseDown(true)
         });
     }
 }
