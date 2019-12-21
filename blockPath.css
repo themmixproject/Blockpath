@@ -39,12 +39,12 @@ div {
 }
 .path.top{
     padding-top:10px;
-    position:absolute;
+    position:relative;
     top:-10px;
 }
 .path.left{
     padding-left:10px;
-    position:absolute;
+    position:relative;
     left:-10px;
 }
 .path.right{
