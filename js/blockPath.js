@@ -3,6 +3,8 @@
  * THE BUG IS KINDA CAUSED BY THE EVENTLISTENRS
  * BEING CONSTANTLY ADDED,
  * SO THAT'S SOMETHING TO LOOK INTO
+ * 
+ * FIX SCOPES OF THE INDEX VARIABLE
  */
 
 /*#####################\
@@ -132,7 +134,7 @@ function pathMouseEnter(element){
 
 
 function checkDrawPath(el){
-    if(game.mouseDown == true){
+    if(game.mouseDown == true && el.innerHTML==""){
 
         x = indexInClass(el)%grid.width
         y = indexInClass(el.parentElement)
@@ -235,6 +237,45 @@ function testReset(){
     reset(10);
 }
 
+function checkIndex(index){
+
+
+    for(var i = 0; i< game.path.length; i++){
+        if(game.path[i] == index){
+                return false
+            
+        }
+        console.log(game.path[i] == index);
+    }
+    return true
+}
+
+function drawRedBlock(){
+
+    var randomIndex = Math.floor(Math.random()*(gridBlocks.length-1))
+    var el;
+
+
+    console.log(game.path);    
+    console.log("check index: "+checkIndex(randomIndex) +" index: "+randomIndex)
+
+    if(checkIndex(randomIndex)){
+        el = document.createElement("div");
+        el.className = "grid-block-red";
+        gridBlocks[randomIndex].append(el);
+
+        console.log(el);
+
+        return;
+    }
+    else{
+        // console.log("again");
+        drawRedBlock();
+        return;
+    }
+
+}
+
 /*#####################\
 #   event-listeners    #
 \#####################*/
@@ -293,3 +334,4 @@ function bindNewPath(element){
 drawGrid();
 addEventListeners();
 drawTestPath();
+drawRedBlock();
