@@ -1,8 +1,17 @@
+/**
+ * TO MOORE AWAKE STEVEN
+ * THE BUG IS KINDA CAUSED BY THE EVENTLISTENRS
+ * BEING CONSTANTLY ADDED,
+ * SO THAT'S SOMETHING TO LOOK INTO
+ */
+
 /*#####################\
 #  init global values  #
 \#####################*/
 
 gridBlocks = document.getElementsByClassName("grid-block");
+
+pathBlocks = document.getElementsByClassName("path");
 
 gridRow = document.getElementsByClassName("grid-row");
 
@@ -40,7 +49,7 @@ function indexInClass(node) {
         return i;
     }
     return -1;
-  }
+}
 
 function drawGrid(height, width){
     for(i=0; i<(grid.height); i++){
@@ -91,8 +100,40 @@ function checkDifferent(index){
     return true;
 }
 
+
+function pathMouseDown(element){
+    
+    var elementIndex = indexInClass( element.parentElement);
+
+    var lastIndex = game.path[game.path.length-1];
+
+    if(elementIndex !== lastIndex){
+        reset(elementIndex)
+    }
+    else{
+       setMouseDown(true); 
+    }
+
+    setMouseDown(true);
+    
+
+}
+
+function pathMouseEnter(element){
+
+    var elementIndex = indexInClass( element.parentElement );
+    var lastIndex = game.path[game.path.length-1];
+
+    if(game.mouseDown == true && elementIndex !== lastIndex){
+        reset(elementIndex);
+    }
+}
+
+
+
 function checkDrawPath(el){
     if(game.mouseDown == true){
+
         x = indexInClass(el)%grid.width
         y = indexInClass(el.parentElement)
         index = indexInClass(el)
@@ -127,7 +168,7 @@ function checkDrawPath(el){
         }
         
     };
-
+    
 };
 
 function drawPath(x, y, index, previousCoordinates){
@@ -157,9 +198,42 @@ function drawPath(x, y, index, previousCoordinates){
         gridBlocks[index].append(el)
     }
 
-    bindPath();
+    // bindPath();
+    bindNewPath(el);
 
 };
+
+function reset(parseIndex){
+    startIndex = game.path.indexOf(parseIndex)+1;
+
+    // console.log(resetBlocks);
+
+    for( i = startIndex; i < game.path.length; i++ ){
+
+        gridBlocks[ game.path[i] ].innerHTML = "";
+
+    }
+
+    game.path.splice(startIndex);
+    game.coordinates.splice(startIndex);
+
+}
+
+function drawTestPath(){
+
+    game.mouseDown = true;
+
+    checkDrawPath(gridBlocks[6])
+    checkDrawPath(gridBlocks[10])
+    checkDrawPath(gridBlocks[14])
+
+    game.mouseDown = false;
+}
+
+function testReset(){
+    console.log(game.path);
+    reset(10);
+}
 
 /*#####################\
 #   event-listeners    #
@@ -176,6 +250,7 @@ function addEventListeners(){
         gridBlocks[i].addEventListener("mouseenter", function(event){
             checkDrawPath(this);
         })
+        
     }
 
     bindPath();
@@ -186,11 +261,30 @@ function bindPath(){
 
     pathBlocks = document.getElementsByClassName("path");
 
+
+
     for(i=0; i<pathBlocks.length; i++){
+
         pathBlocks[i].addEventListener("mousedown", function(event){
-            setMouseDown(true)
+            pathMouseDown(this);
+        });
+
+        pathBlocks[i].addEventListener("mouseenter",function(event){
+            pathMouseEnter(this);
         });
     }
+}
+
+function bindNewPath(element){
+
+    element.addEventListener("mousedown", function(event){
+        pathMouseDown(this);
+    })
+
+    element.addEventListener("mouseenter",function(event){
+        pathMouseEnter(this);
+    });
+
 }
 
 /*#####################\
@@ -198,3 +292,4 @@ function bindPath(){
 \#####################*/
 drawGrid();
 addEventListeners();
+drawTestPath();
