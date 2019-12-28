@@ -62,36 +62,36 @@ function indexInClass(node) {
     return -1;
 }
 
-function drawGrid(){
+// function drawGrid(){
 
-    for(i=0; i<(grid.height); i++){
-        row=document.createElement("div");
-        row.className = "grid-row";
-        gameGrid.append(row)
-        for(e=0;e<grid.width;e++){
-            el = document.createElement("div");
-            el.className="grid-block";
-            el.style.height = grid.blockHeight + "px";
-            el.style.width = grid.blockWidth + "px";
-            el.style.margin = grid.blockMargin + "px";
-            row.append(el);
-        }
-    }
+//     for(i=0; i<(grid.height); i++){
+//         row=document.createElement("div");
+//         row.className = "grid-row";
+//         gameGrid.append(row)
+//         for(e=0;e<grid.width;e++){
+//             el = document.createElement("div");
+//             el.className="grid-block";
+//             el.style.height = grid.blockHeight + "px";
+//             el.style.width = grid.blockWidth + "px";
+//             el.style.margin = grid.blockMargin + "px";
+//             row.append(el);
+//         }
+//     }
     
-    gameGrid.style.width = (grid.blockWidth+grid.blockMargin*2)*grid.width+"px";
-    gameGrid.style.height = (grid.blockHeight+grid.blockMargin*2)*grid.height+"px";
+//     gameGrid.style.width = (grid.blockWidth+grid.blockMargin*2)*grid.width+"px";
+//     gameGrid.style.height = (grid.blockHeight+grid.blockMargin*2)*grid.height+"px";
 
-    pathStart = document.createElement("div");
+//     pathStart = document.createElement("div");
 
-    pathStart.id = "path-start";
+//     pathStart.id = "path-start";
 
-    pathStart.className = "path"
+//     pathStart.className = "path"
 
-    document.getElementsByClassName("grid-row")[game.startY].getElementsByClassName("grid-block")[game.startX].append(pathStart);
+//     document.getElementsByClassName("grid-row")[game.startY].getElementsByClassName("grid-block")[game.startX].append(pathStart);
 
-    game.coordinates.push([game.startX, game.startY, indexInClass(pathStart)])
-    game.path.push(indexInClass(pathStart.parentElement))
-};
+//     game.coordinates.push([game.startX, game.startY, indexInClass(pathStart)])
+//     game.path.push(indexInClass(pathStart.parentElement))
+// };
 
 function setMouseDown(mouseDown){
     
@@ -286,11 +286,12 @@ function drawRedBlock(){
 
 
 class level {
-    constructor(gridHeight, gridWidth, pathStartX, pathStartY){
+    constructor(gridHeight, gridWidth, pathStartX, pathStartY, redBlocks){
         this.gridHeight = gridHeight;
         this.gridWidth = gridWidth;
         this.pathStartX = pathStartX;
         this.pathStartY = pathStartY
+        this.redBlocks = redBlocks;
     }
 
     generate(){
@@ -325,32 +326,27 @@ class level {
 
         pathBlocks = document.getElementsByClassName("path");
 
-        this.addEvents();
+        this.drawRedBlocks();
+
+        addGridEvents();
 
     }
 
-    addEvents(){
-
-        pathBlocks = document.getElementsByClassName("path");
-
-        for(i=0; i<gridBlocks.length; i++){
-            gridBlocks[i].addEventListener("mouseenter", function(event){
-                checkDrawPath(this);
-            })
-            
-        }
-
-
-        for(i=0; i<pathBlocks.length; i++){
-    
-            pathBlocks[i].addEventListener("mousedown", function(event){
-                pathMouseDown(this);
-            });
-    
-            pathBlocks[i].addEventListener("mouseenter",function(event){
-                pathMouseEnter(this);
+    drawRedBlocks(){
+        var el;
+        if(this.redBlocks!==undefined && this.redBlocks.length!==0 ){
+            this.redBlocks.forEach(function(item, index){
+                el = document.createElement("div");
+                el.className = "grid-block-red";
+                gridBlocks[item].append(el);
+                game.redBlocks.push(item);
             });
         }
+
+        // el = document.createElement("div");
+        // el.className = "grid-block-red";
+        // gridBlocks[randomIndex].append(el);
+        // game.redBlocks.push(randomIndex);
     }
 
     clear(){
@@ -358,8 +354,6 @@ class level {
     }
 
 }
-
-
 
 
 
@@ -395,10 +389,16 @@ function addEventListeners(){
 
 }
 
-function bindPath(){
+function addGridEvents(){
 
     pathBlocks = document.getElementsByClassName("path");
 
+    for(i=0; i<gridBlocks.length; i++){
+        gridBlocks[i].addEventListener("mouseenter", function(event){
+            checkDrawPath(this);
+        })
+        
+    }
 
 
     for(i=0; i<pathBlocks.length; i++){
@@ -411,7 +411,26 @@ function bindPath(){
             pathMouseEnter(this);
         });
     }
+
 }
+
+// function bindPath(){
+
+//     pathBlocks = document.getElementsByClassName("path");
+
+
+
+//     for(i=0; i<pathBlocks.length; i++){
+
+//         pathBlocks[i].addEventListener("mousedown", function(event){
+//             pathMouseDown(this);
+//         });
+
+//         pathBlocks[i].addEventListener("mouseenter",function(event){
+//             pathMouseEnter(this);
+//         });
+//     }
+// }
 
 function bindNewPath(element){
 
@@ -430,7 +449,7 @@ function bindNewPath(element){
 \#####################*/
 // drawGrid();
 addEventListeners();
-level1 = new level(4,4,0,2);
+level1 = new level(4,4,0,2,[4]);
 levels.push(level1);
 level1.generate();
 // drawTestPath();
