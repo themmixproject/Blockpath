@@ -19,21 +19,30 @@ gridRow = document.getElementsByClassName("grid-row");
 
 gameGrid = document.getElementById("game-grid");
 
+mainMenu = document.getElementById("main-menu");
+
+levelButtons = document.getElementsByClassName("menu-option");
+levelButtonsArr = [];
+for(var i=0; i<levelButtons.length; i++){levelButtonsArr.push(levelButtons[i])}
+
+levels = [];
+currentLevel = 0;
 
 grid = {
     height:4,
     width:4,
     blockHeight:100,
     blockWidth:100,
-    blockMargin:5
+    blockMargin:5,
 }
 
 game = {
     mouseDown : false,
     path : [],
     coordinates: [],
-    startX: 1,
-    startY: 1
+    startX: 3,
+    startY: 1,
+    redBlocks:[]
 }
 
 
@@ -53,7 +62,8 @@ function indexInClass(node) {
     return -1;
 }
 
-function drawGrid(height, width){
+function drawGrid(){
+
     for(i=0; i<(grid.height); i++){
         row=document.createElement("div");
         row.className = "grid-row";
@@ -66,7 +76,6 @@ function drawGrid(height, width){
             el.style.margin = grid.blockMargin + "px";
             row.append(el);
         }
-        
     }
     
     gameGrid.style.width = (grid.blockWidth+grid.blockMargin*2)*grid.width+"px";
@@ -85,6 +94,7 @@ function drawGrid(height, width){
 };
 
 function setMouseDown(mouseDown){
+    
     // pathStart = document.getElementById("path-start");
 
     game.mouseDown = mouseDown;
@@ -118,7 +128,6 @@ function pathMouseDown(element){
 
     setMouseDown(true);
     
-
 }
 
 function pathMouseEnter(element){
@@ -136,10 +145,10 @@ function pathMouseEnter(element){
 function checkDrawPath(el){
     if(game.mouseDown == true && el.innerHTML==""){
 
-        x = indexInClass(el)%grid.width
-        y = indexInClass(el.parentElement)
-        index = indexInClass(el)
-        
+        var x = indexInClass(el)%levels[currentLevel].gridWidth;
+        var y = indexInClass(el.parentElement)
+        var index = indexInClass(el)
+
         game.path.push(index)
         game.coordinates.push([x, y, index]);
         
@@ -147,6 +156,9 @@ function checkDrawPath(el){
 
         differenceX = previousCoordinates[0] - x;
         differenceY = previousCoordinates[1] - y;
+
+        console.log("differenceX:" + differenceX+" differenceY:"+differenceY);
+        console.log("within X:" + (differenceX <= 1 && differenceX >= -1 && differenceY===0) + " withinY:"+(differenceY <= 1 && differenceY >= -1 && differenceX === 0));
 
         if( checkDifferent(index) == true){
 
@@ -239,13 +251,11 @@ function testReset(){
 
 function checkIndex(index){
 
-
     for(var i = 0; i< game.path.length; i++){
         if(game.path[i] == index){
                 return false
             
         }
-        console.log(game.path[i] == index);
     }
     return true
 }
@@ -255,26 +265,107 @@ function drawRedBlock(){
     var randomIndex = Math.floor(Math.random()*(gridBlocks.length-1))
     var el;
 
-
-    console.log(game.path);    
-    console.log("check index: "+checkIndex(randomIndex) +" index: "+randomIndex)
-
     if(checkIndex(randomIndex)){
         el = document.createElement("div");
         el.className = "grid-block-red";
         gridBlocks[randomIndex].append(el);
-
-        console.log(el);
-
+        game.redBlocks.push(randomIndex);
         return;
     }
     else{
-        // console.log("again");
         drawRedBlock();
         return;
     }
 
 }
+
+
+
+
+
+
+
+class level {
+    constructor(gridHeight, gridWidth, pathStartX, pathStartY){
+        this.gridHeight = gridHeight;
+        this.gridWidth = gridWidth;
+        this.pathStartX = pathStartX;
+        this.pathStartY = pathStartY
+    }
+
+    generate(){
+
+        mainMenu.style.display = "none";
+
+        for(var i=0; i<this.gridHeight; i++){
+            var row=document.createElement("div");
+            row.className = "grid-row";
+            gameGrid.append(row)
+            for(var e=0;e<this.gridWidth;e++){
+                var el = document.createElement("div");
+                el.className="grid-block";
+                el.style.height = grid.blockHeight + "px";
+                el.style.width = grid.blockWidth + "px";
+                el.style.margin = grid.blockMargin + "px";
+                row.append(el);
+            }
+        }
+
+        gameGrid.style.width = (grid.blockWidth+grid.blockMargin*2)*this.gridWidth+"px";
+        gameGrid.style.height = (grid.blockHeight+grid.blockMargin*2)*this.gridHeight+"px";
+    
+        var pathStart = document.createElement("div");
+        pathStart.id = "path-start";
+        pathStart.className = "path"
+    
+        document.getElementsByClassName("grid-row")[this.pathStartY].getElementsByClassName("grid-block")[this.pathStartX].append(pathStart);
+    
+        game.coordinates.push([this.pathStartX, this.pathStartY, indexInClass(pathStart)])
+        game.path.push(indexInClass(pathStart.parentElement))
+
+        pathBlocks = document.getElementsByClassName("path");
+
+        this.addEvents();
+
+    }
+
+    addEvents(){
+
+        pathBlocks = document.getElementsByClassName("path");
+
+        for(i=0; i<gridBlocks.length; i++){
+            gridBlocks[i].addEventListener("mouseenter", function(event){
+                checkDrawPath(this);
+            })
+            
+        }
+
+
+        for(i=0; i<pathBlocks.length; i++){
+    
+            pathBlocks[i].addEventListener("mousedown", function(event){
+                pathMouseDown(this);
+            });
+    
+            pathBlocks[i].addEventListener("mouseenter",function(event){
+                pathMouseEnter(this);
+            });
+        }
+    }
+
+    clear(){
+        gameGrid.innerHTML="";
+    }
+
+}
+
+
+
+
+
+
+
+
 
 /*#####################\
 #   event-listeners    #
@@ -286,15 +377,21 @@ function addEventListeners(){
         setMouseDown(false);
     });
 
+    levelButtonsArr.forEach(function(item, index){
+        item.addEventListener("click", function(){
+            generateLevel(index);
+        });
+    })
+    
 
-    for(i=0; i<gridBlocks.length; i++){
-        gridBlocks[i].addEventListener("mouseenter", function(event){
-            checkDrawPath(this);
-        })
+    // for(i=0; i<gridBlocks.length; i++){
+    //     gridBlocks[i].addEventListener("mouseenter", function(event){
+    //         checkDrawPath(this);
+    //     })
         
-    }
+    // }
 
-    bindPath();
+    // bindPath();
 
 }
 
@@ -331,7 +428,10 @@ function bindNewPath(element){
 /*#####################\
 #         init         #
 \#####################*/
-drawGrid();
+// drawGrid();
 addEventListeners();
-drawTestPath();
-drawRedBlock();
+level1 = new level(4,4,0,2);
+levels.push(level1);
+level1.generate();
+// drawTestPath();
+// drawRedBlock();

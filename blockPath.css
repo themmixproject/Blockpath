@@ -51,76 +51,38 @@ div {
     padding-right:10px;
 }
 
+#main-menu{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+}
 
-/* .path.-v{
-    position:absolute;
-    bottom:5px;
-    padding-top:10px;
-    padding-bottom:10px;
-    top:-10px;
+#game-title{
+    font-family:"Arial";
+    font-size:50px;
+    margin:0;
+    margin-bottom:50px;
 }
-.path.-h{
-    position:absolute;
-    bottom:5px;
-    padding-left:10px;
-    padding-right:10px;
-    left:-10px;
+
+.header-blue{
+    color:rgb(89, 163, 255);
 }
-.path.-v{
-    position:absolute;
-    bottom:5px;
-    padding-top:10px;
-    padding-bottom:10px;
-    top:-10px;
+
+.header-red{
+    color:rgb(255, 90, 90);
 }
-.path.-c-b-r{
-    padding-bottom:10px;
-}
-.path.-c-b-r::after{
-    content:"";
+
+.menu-option{
     background-color:rgb(89, 163, 255);
-    position:absolute;
-    padding-right:10px;
-    height:100px;
-    width:100px;
+    margin:10px;
+    padding:15px;
+    text-align:center;
+    font-family:"Arial";
+    font-size:25px;
+    color:white;
 }
-.path.-c-b-l{
-    padding-bottom:10px;
+
+.menu-option:hover{
+    cursor:pointer;
 }
-.path.-c-b-l::after{
-    content:"";
-    background-color:rgb(89, 163, 255);
-    position:absolute;
-    padding-left:10px;
-    height:100px;
-    width:100px;
-}
-.path.-c-t-r{
-    padding-top:10px;
-    top:-10px;
-    position:absolute;
-    top:-10px;
-    height:110px;
-}
-.path.-c-t-r::after{
-    content:"";
-    background-color:rgb(89, 163, 255);
-    position:absolute;
-    padding-right:10px;
-    height:100px;
-    width:100px;
-}
-.path.-c-t-l{
-    padding-top:10px;
-    top:-10px;
-    position:absolute;
-}
-.path.-c-t-l::before{
-    content:"";
-    background-color:rgb(89, 163, 255);
-    position:absolute;
-    right:5px;
-    padding-left:10px;
-    height:100px;
-    width:100px;
-} */
