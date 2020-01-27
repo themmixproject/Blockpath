@@ -6,28 +6,34 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <title></title>
         <meta name="description" content=""/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0, minimum-scale=0.86"/>
 
         <link rel="stylesheet" href="blockPath.css">
+        <link rel="stylesheet" href="reset.min.css">
 
     </head>
     <body>
 
-        <div id="main-menu">
+        <div id="main-menu" style="display:none;">
             <h1 id="game-title">
                 <span class="header-blue">Block</span><span class="header-red">Path</span>
             </h1>
             <div id="menu">
-                <div class="menu-option">Level 1</div>
-                <div class="menu-option">Level 2</div>
-                <div class="menu-option">Level 3</div>
-                <div class="menu-option">Level 4</div>
-                <div class="menu-option">Level 5</div>
-                <div class="menu-option">Level 6</div>
+                <div class="menu-option" id="play-button">Play</div>
             </div>
         </div>
 
         <div id="game-grid"></div>
+        
+        
+        <div id="game-win-screen">
+            <div id="game-win-screen-wrapper">
+                <div id="game-win-screen-header-wrapper">
+                    <h1 id="game-win-header">YOU WIN</h1>
+                    <div id="next-level-button">NEXT ></div>
+                </div>
+            </div>    
+        </div>
         
         <script type="text/javascript" src="js/blockPath.js"></script>
 

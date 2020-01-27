@@ -21,9 +21,11 @@ gameGrid = document.getElementById("game-grid");
 
 mainMenu = document.getElementById("main-menu");
 
-levelButtons = document.getElementsByClassName("menu-option");
-levelButtonsArr = [];
-for(var i=0; i<levelButtons.length; i++){levelButtonsArr.push(levelButtons[i])}
+gameWinScreen = document.getElementById("game-win-screen");
+
+gameWinHeader = document.getElementById("game-win-header");
+
+playButton = document.getElementById("play-button");
 
 levels = [];
 currentLevel = 0;
@@ -33,7 +35,7 @@ grid = {
     width:4,
     blockHeight:100,
     blockWidth:100,
-    blockMargin:5,
+    blockMargin:2,
 }
 
 game = {
@@ -42,7 +44,8 @@ game = {
     coordinates: [],
     startX: 3,
     startY: 1,
-    redBlocks:[]
+    redBlocks:[],
+    win: false
 }
 
 
@@ -140,7 +143,10 @@ function pathMouseEnter(element){
     }
 }
 
-
+function displayAlert(text){
+    gameWinScreen.style.display = "block";
+    gameWinHeader.innerHTML = text;
+}
 
 function checkDrawPath(el){
     if(game.mouseDown == true && el.innerHTML==""){
@@ -157,8 +163,8 @@ function checkDrawPath(el){
         differenceX = previousCoordinates[0] - x;
         differenceY = previousCoordinates[1] - y;
 
-        console.log("differenceX:" + differenceX+" differenceY:"+differenceY);
-        console.log("within X:" + (differenceX <= 1 && differenceX >= -1 && differenceY===0) + " withinY:"+(differenceY <= 1 && differenceY >= -1 && differenceX === 0));
+        // console.log("differenceX:" + differenceX+" differenceY:"+differenceY);
+        // console.log("within X:" + (differenceX <= 1 && differenceX >= -1 && differenceY===0) + " withinY:"+(differenceY <= 1 && differenceY >= -1 && differenceX === 0));
 
         if( checkDifferent(index) == true){
 
@@ -168,7 +174,23 @@ function checkDrawPath(el){
             ){
 
                 // console.log(game.path)
-                drawPath(x, y, index, previousCoordinates) 
+                drawPath(x, y, index, previousCoordinates);
+
+                if(game.path.length == levels[currentLevel].pathLength){
+
+                    if(currentLevel == levels.length-1){
+                        game.end = true;
+                        displayAlert("You have finished the game");
+                        // console.log("game end");
+                    }
+                    else{
+                        displayAlert("You Win! buddy!");
+                        game.win=true;
+                    }
+                    // displayGameWinScreen();
+                    
+                    // nextLevel();
+                }
             }
         else{
                 game.path.splice(-1,1);
@@ -216,6 +238,20 @@ function drawPath(x, y, index, previousCoordinates){
     bindNewPath(el);
 
 };
+
+function resetGame(){
+    currentLevel=0;
+    gameGrid.innerHTML="";
+    game.end = false;
+    game.win = false;
+    resetGrid();
+}
+
+function resetGrid(){
+    game.path = [];
+    game.coordinates = [];
+    gameGrid.innerHTML = "";
+}
 
 function reset(parseIndex){
     startIndex = game.path.indexOf(parseIndex)+1;
@@ -292,6 +328,7 @@ class level {
         this.pathStartX = pathStartX;
         this.pathStartY = pathStartY
         this.redBlocks = redBlocks;
+        this.pathLength = (this.gridHeight*gridWidth) - redBlocks.length;
     }
 
     generate(){
@@ -355,15 +392,49 @@ class level {
 
 }
 
+function nextLevel(){
+    resetGrid();
+    currentLevel+=1;
+    levels[currentLevel].generate();
+    displayGameGrid();
 
-
-
-
-
+    
+}
 
 /*#####################\
-#   event-listeners    #
+#   display functions  #
 \#####################*/
+
+function hideAllScreens(){
+    mainMenu.style.display = "none";
+    gameGrid.style.display = "none";
+    gameWinScreen.style.display = "none";
+}
+
+function displayMainMenu(){
+    hideAllScreens();
+    mainMenu.style.display = "block";
+}
+
+function displayGameGrid(){
+    hideAllScreens();
+    gameGrid.style.display = "block";
+}
+
+function displayGameWinScreen(){
+    hideAllScreens();
+    gameGrid.style.display = "block";
+    gameWinScreen.style.display = "block";
+}
+
+
+
+/*#####################################################\
+ *|                                                    #
+ *| 2. Event Listeners                                 #
+ *|                                                    # 
+\#####################################################*/
+
 
 function addEventListeners(){
 
@@ -371,11 +442,38 @@ function addEventListeners(){
         setMouseDown(false);
     });
 
-    levelButtonsArr.forEach(function(item, index){
-        item.addEventListener("click", function(){
-            generateLevel(index);
-        });
+    gameWinScreen.addEventListener("click", function(){
+        if(document.getElementById("game-win-screen").style.display!="none" && document.getElementById("game-win-screen").style.display!=""){
+            if( game.win == true ){
+                nextLevel();
+                game.win = false;
+            }
+            else if( game.end == true ){
+                resetGame();
+                displayMainMenu();
+            }
+            else{
+                displayGameGrid();
+            }
+
+            
+
+            // nextLevel();
+            // displayAlert("you win");
+        }
+    });
+
+    playButton.addEventListener("click", function(){
+        // displayGameGrid();
+        levels[currentLevel].generate();
+        displayGameGrid();
+        displayAlert("drag the path to fill the grid!");
     })
+    // levelButtonsArr.forEach(function(item, index){
+    //     item.addEventListener("click", function(){
+    //         generateLevel(index);
+    //     });
+    // })
     
 
     // for(i=0; i<gridBlocks.length; i++){
@@ -390,6 +488,8 @@ function addEventListeners(){
 }
 
 function addGridEvents(){
+
+    console.log("add grid events!");
 
     pathBlocks = document.getElementsByClassName("path");
 
@@ -444,13 +544,24 @@ function bindNewPath(element){
 
 }
 
-/*#####################\
-#         init         #
-\#####################*/
+/*#####################################################\
+ *|                                                    #
+ *| 2. Initialization                                  #
+ *|                                                    # 
+\#####################################################*/
 // drawGrid();
 addEventListeners();
-level1 = new level(4,4,0,2,[4]);
-levels.push(level1);
-level1.generate();
+// mainMenu.style.display = "none";
+displayMainMenu();
+
+levels.push(
+    new level(3,3,0,2,[4]),
+    new level(7,4,0,4,[10,14,22,23,27]),
+    new level(8,6,1,0,[10,19, 28, 30, 36, 37, 45]),
+    new level(6,5,0,0,[8,13,11,28]),
+    new level(7 ,5, 0,0,[1,2,3,10,17,22]),
+    new level(8,6,4,4,[11,13,14,19,27,29,46,47])
+)
+// levels[currentLevel].generate();
 // drawTestPath();
 // drawRedBlock();
