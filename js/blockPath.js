@@ -33,8 +33,8 @@ currentLevel = 0;
 grid = {
     height:4,
     width:4,
-    blockHeight:100,
-    blockWidth:100,
+    blockHeight:70,
+    blockWidth:70,
     blockMargin:2,
 }
 
@@ -180,23 +180,31 @@ function drawPath(x, y, index, previousCoordinates){
     if(previousCoordinates[0] - (x) == -1){
         el = document.createElement("div");
         el.className = "path left";
+        el.style.height = grid.blockHeight + "px";
+        el.style.width = grid.blockWidth + "px";
         gridBlocks[index].append(el)
     }
     else if( previousCoordinates[0] - (x) == 1 ){
         el = document.createElement("div");
         el.className = "path right";
+        el.style.height = grid.blockHeight + "px";
+        el.style.width = grid.blockWidth + "px";
         gridBlocks[index].append(el)
     }
 
     else if(previousCoordinates[1] - y == -1){
         el = document.createElement("div");
         el.className = "path top";
+        el.style.height = grid.blockHeight + "px";
+        el.style.width = grid.blockWidth + "px";
         gridBlocks[index].append(el)
     }
 
     else if(previousCoordinates[1] - y == 1){
         el = document.createElement("div");
         el.className = "path bottom";
+        el.style.height = grid.blockHeight + "px";
+        el.style.width = grid.blockWidth + "px";
         gridBlocks[index].append(el)
     }
 
@@ -314,7 +322,9 @@ class level {
     
         var pathStart = document.createElement("div");
         pathStart.id = "path-start";
-        pathStart.className = "path"
+        pathStart.className = "path";
+        pathStart.style.height = grid.blockHeight + "px";
+        pathStart.style.width = grid.blockWidth + "px";
     
         document.getElementsByClassName("grid-row")[this.pathStartY].getElementsByClassName("grid-block")[this.pathStartX].append(pathStart);
     
@@ -335,6 +345,8 @@ class level {
             this.redBlocks.forEach(function(item, index){
                 el = document.createElement("div");
                 el.className = "grid-block-red";
+                el.style.height = grid.blockHeight + "px";
+                el.style.width = grid.blockWidth + "px";
                 gridBlocks[item].append(el);
                 game.redBlocks.push(item);
             });
