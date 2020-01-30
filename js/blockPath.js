@@ -1,15 +1,27 @@
+/*
+
+    ~Index blockPath.js~
+    ----------------------
+
+    1. init values
+    2. functions
+    3. level class
+    4. display functions
+    5. event listeners
+
+*/
+
 /**
  * TO MOORE AWAKE STEVEN
- * THE BUG IS KINDA CAUSED BY THE EVENTLISTENRS
- * BEING CONSTANTLY ADDED,
- * SO THAT'S SOMETHING TO LOOK INTO
  * 
- * FIX SCOPES OF THE INDEX VARIABLE
+ * 
  */
 
-/*#####################\
-#  init global values  #
-\#####################*/
+/*#####################################################\
+ *|                                                    #
+ *| 1. init values                                     #
+ *|                                                    #
+\#####################################################*/
 
 gridBlocks = document.getElementsByClassName("grid-block");
 
@@ -52,10 +64,11 @@ game = {
 
 // gameGrid.style.width = "10px";
 
-/*#####################\
-#       functions      #
-\#####################*/
-
+/*#####################################################\
+ *|                                                    #
+ *| 2. functions                                       #
+ *|                                                    #
+\#####################################################*/
 function indexInClass(node) {
     var collection = document.getElementsByClassName(node.className);
     for (var i = 0; i < collection.length; i++) {
@@ -289,6 +302,12 @@ function drawRedBlock(){
 
 }
 
+/*#####################################################\
+ *|                                                    #
+ *| 3. level class                                     #
+ *|                                                    #
+\#####################################################*/
+
 class level {
     constructor(gridHeight, gridWidth, pathStartX, pathStartY, redBlocks){
         this.gridHeight = gridHeight;
@@ -368,9 +387,11 @@ function nextLevel(){
     
 }
 
-/*#####################\
-#   display functions  #
-\#####################*/
+/*#####################################################\
+ *|                                                    #
+ *| 4. display functions                               #
+ *|                                                    # 
+\#####################################################*/
 
 function hideAllScreens(){
     mainMenu.style.display = "none";
@@ -398,7 +419,7 @@ function displayGameWinScreen(){
 
 /*#####################################################\
  *|                                                    #
- *| 2. Event Listeners                                 #
+ *| 5. event listeners                                 #
  *|                                                    # 
 \#####################################################*/
 
@@ -474,7 +495,7 @@ function bindNewPath(element){
 
 /*#####################################################\
  *|                                                    #
- *| 2. Initialization                                  #
+ *| 6. Initialization                                  #
  *|                                                    # 
 \#####################################################*/
 // drawGrid();
