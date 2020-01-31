@@ -19,37 +19,26 @@ function checkDrawPath(el){
                 differenceX <= 1 && differenceX >= -1 && differenceY===0 ||
                 differenceY <= 1 && differenceY >= -1 && differenceX === 0
             ){
-
-                // console.log(game.path)
                 drawPath(x, y, index, previousCoordinates);
-
-                if(game.path.length == levels[currentLevel].pathLength){
-
+                if( game.path.length == levels[currentLevel].pathLength ){
                     if(currentLevel == levels.length-1){
                         game.end = true;
                         displayAlert("You have finished the game");
-                        // console.log("game end");
                     }
                     else{
                         displayAlert("You Win! buddy!");
                         game.win=true;
                     }
-                    // displayGameWinScreen();
-                    
-                    // nextLevel();
                 }
             }
-        else{
+            else{
                 game.path.splice(-1,1);
                 game.coordinates.splice(-1,1)
             }
-            
         }
         else{
             game.path.splice(-1,1);
             game.coordinates.splice(-1,1)
-        }
-        
+        }  
     };
-    
 };
