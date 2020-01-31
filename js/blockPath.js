@@ -87,16 +87,6 @@ function setMouseDown(mouseDown){
     // console.log(game.mouseDown)
 }
 
-function checkDifferent(index){
-    for(var i = 0; i < game.path.length-1; i++)
-    {
-        if(game.path[i] === index){
-            return false;
-        }
-    }
-    return true;
-}
-
 
 function pathMouseDown(element){
     
@@ -106,9 +96,6 @@ function pathMouseDown(element){
 
     if(elementIndex !== lastIndex){
         reset(elementIndex)
-    }
-    else{
-       setMouseDown(true); 
     }
 
     setMouseDown(true);
@@ -184,41 +171,7 @@ function resetGrid(){
     gameGrid.innerHTML = "";
 }
 
-function reset(parseIndex){
-    startIndex = game.path.indexOf(parseIndex)+1;
 
-    // console.log(resetBlocks);
-
-    for( i = startIndex; i < game.path.length; i++ ){
-
-        gridBlocks[ game.path[i] ].innerHTML = "";
-
-    }
-
-    game.path.splice(startIndex);
-    game.coordinates.splice(startIndex);
-
-}
-
-function checkIndex(index){
-
-    for(var i = 0; i< game.path.length; i++){
-        if(game.path[i] == index){
-                return false
-            
-        }
-    }
-    return true
-}
-
-function nextLevel(){
-    resetGrid();
-    currentLevel+=1;
-    levels[currentLevel].generate();
-    displayGameGrid();
-
-    
-}
 
 /*#####################################################\
  *|                                                    #
