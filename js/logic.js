@@ -80,6 +80,4 @@ function nextLevel(){
     currentLevel+=1;
     levels[currentLevel].generate();
     displayGameGrid();
-
-    
 }
