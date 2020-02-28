@@ -23,26 +23,26 @@
  *|                                                    #
 \#####################################################*/
 
-gridBlocks = document.getElementsByClassName("grid-block");
+var gridBlocks = document.getElementsByClassName("grid-block");
 
-pathBlocks = document.getElementsByClassName("path");
+var pathBlocks = document.getElementsByClassName("path");
 
-gridRow = document.getElementsByClassName("grid-row");
+var gridRow = document.getElementsByClassName("grid-row");
 
-gameGrid = document.getElementById("game-grid");
+var gameGrid = document.getElementById("game-grid");
 
-mainMenu = document.getElementById("main-menu");
+var mainMenu = document.getElementById("main-menu");
 
-gameWinScreen = document.getElementById("game-win-screen");
+var gameWinScreen = document.getElementById("game-win-screen");
 
-gameWinHeader = document.getElementById("game-win-header");
+var gameWinHeader = document.getElementById("game-win-header");
 
-playButton = document.getElementById("play-button");
+var playButton = document.getElementById("play-button");
 
-levels = [];
-currentLevel = 0;
+var levels = [];
+var currentLevel = 0;
 
-grid = {
+var grid = {
     height:4,
     width:4,
     blockHeight:70,
@@ -50,15 +50,17 @@ grid = {
     blockMargin:2,
 }
 
-game = {
+var game = {
     mouseDown : false,
     path : [],
     coordinates: [],
     startX: 3,
     startY: 1,
     redBlocks:[],
-    win: false
+    win: false,
 }
+
+// var isMobile = false;
 
 
 
@@ -78,15 +80,20 @@ function indexInClass(node) {
     return -1;
 }
 
-function setMouseDown(mouseDown){
-    
-    // pathStart = document.getElementById("path-start");
+function hasClass(element, elementClass){
+    var className = " " + elementClass + " ";
+    if(element!=null){
+            return (" " + element.className + " ").replace(/[\n\t]/g, " ").indexOf(className) > -1;
+    }
+    else{
+        console.log("Error: no element input");
+    }
 
-    game.mouseDown = mouseDown;
-
-    // console.log(game.mouseDown)
 }
 
+function setMouseDown(mouseDown){
+    game.mouseDown = mouseDown;
+}
 
 function pathMouseDown(element){
     
@@ -246,22 +253,81 @@ function addGridEvents(){
     pathBlocks = document.getElementsByClassName("path");
 
     for(i=0; i<gridBlocks.length; i++){
-        gridBlocks[i].addEventListener("mouseenter", function(event){
-            checkDrawPath(this);
-        })
+
+        if(isMobile==true){
+            document.addEventListener("touchmove", function(event){
+                element = document.elementFromPoint(
+                    event.touches[0].clientX,
+                    event.touches[0].clientY
+                )
+
+                // console.log(hasClass(element,"path"))
+                
+                if(hasClass(element,"grid-block")){
+                    checkDrawPath(element);
+                }
+            })
+
+        }
+        else{
+            gridBlocks[i].addEventListener("mouseenter", function(event){
+                checkDrawPath(this);
+            })
+        }
+
+
         
     }
 
     for(i=0; i<pathBlocks.length; i++){
 
-        pathBlocks[i].addEventListener("mousedown", function(event){
-            pathMouseDown(this);
-        });
+        if(isMobile==true){
+            // pathBlocks[i].addEventListener("touchstart", function(event){
+            //     pathMouseDown(this);
+            // });
 
-        pathBlocks[i].addEventListener("mouseenter",function(event){
-            pathMouseEnter(this);
-        });
+            document.addEventListener("touchstart",function(event){
+                
+                element = document.elementFromPoint(
+                    event.touches[0].clientX,
+                    event.touches[0].clientY
+                )
+
+                // console.log(hasClass(element,"path"))
+                
+                if(hasClass(element,"path")){
+                    pathMouseDown(element);
+                }
+
+            })
+
+            document.addEventListener("touchmove",function(){
+
+                element = document.elementFromPoint(
+                    event.touches[0].clientX,
+                    event.touches[0].clientY
+                )
+
+                if(hasClass(element,"path")){
+                    pathMouseDown(element);
+                }
+
+                // console.log(hasClass(element,"path"))
+                
+            });
+        }
+        else{
+            pathBlocks[i].addEventListener("mousedown", function(event){
+                pathMouseDown(this);
+            });
+
+            pathBlocks[i].addEventListener("mouseenter",function(event){
+                pathMouseEnter(this);
+            });
+        }    
     }
+
+
 
 }
 
