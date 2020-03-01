@@ -266,6 +266,8 @@ function addGridEvents(){
                 if(hasClass(element,"grid-block")){
                     checkDrawPath(element);
                 }
+
+                // event.preventDefault();
             })
 
         }
@@ -299,6 +301,8 @@ function addGridEvents(){
                     pathMouseDown(element);
                 }
 
+                // event.preventDefault();
+
             })
 
             document.addEventListener("touchmove",function(){
@@ -314,6 +318,8 @@ function addGridEvents(){
 
                 // console.log(hasClass(element,"path"))
                 
+                // event.preventDefault();
+
             });
         }
         else{

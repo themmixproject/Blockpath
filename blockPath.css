@@ -15,10 +15,18 @@ div {
   }
   
 #game-grid{
-    position:absolute;
+    position: absolute;
     left:50%;
     top:50%;
     transform: translate(-50%,-50%);
+    overflow: hidden;
+    touch-action: none;
+}
+
+#grid-wrapper{
+    /* position: relative;
+    height: 100%;
+    width: 100%; */
 }
 
 .grid-block{
