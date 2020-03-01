@@ -45,8 +45,8 @@ var currentLevel = 0;
 var grid = {
     height:4,
     width:4,
-    blockHeight:70,
-    blockWidth:70,
+    blockHeight:40,
+    blockWidth:40,
     blockMargin:2,
 }
 
