@@ -45,8 +45,8 @@ var currentLevel = 0;
 var grid = {
     height:4,
     width:4,
-    blockHeight:40,
-    blockWidth:40,
+    blockHeight:46,
+    blockWidth:46,
     blockMargin:2,
 }
 
@@ -128,36 +128,25 @@ function drawPath(x, y, index, previousCoordinates){
 
     var el;
 
+    el = document.createElement("div");
+    el.style.height = grid.blockHeight + "px";
+    el.style.width = grid.blockWidth + "px";
+
     if(previousCoordinates[0] - (x) == -1){
-        el = document.createElement("div");
         el.className = "path left";
-        el.style.height = grid.blockHeight + "px";
-        el.style.width = grid.blockWidth + "px";
-        gridBlocks[index].append(el)
     }
     else if( previousCoordinates[0] - (x) == 1 ){
-        el = document.createElement("div");
         el.className = "path right";
-        el.style.height = grid.blockHeight + "px";
-        el.style.width = grid.blockWidth + "px";
-        gridBlocks[index].append(el)
     }
-
     else if(previousCoordinates[1] - y == -1){
-        el = document.createElement("div");
         el.className = "path top";
-        el.style.height = grid.blockHeight + "px";
-        el.style.width = grid.blockWidth + "px";
-        gridBlocks[index].append(el)
     }
 
     else if(previousCoordinates[1] - y == 1){
-        el = document.createElement("div");
         el.className = "path bottom";
-        el.style.height = grid.blockHeight + "px";
-        el.style.width = grid.blockWidth + "px";
-        gridBlocks[index].append(el)
     }
+
+    gridBlocks[index].append(el)
 
     // bindPath();
     bindNewPath(el);
