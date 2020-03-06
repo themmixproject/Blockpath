@@ -244,19 +244,18 @@ function addGridEvents(){
     for(i=0; i<gridBlocks.length; i++){
 
         if(isMobile==true){
-            document.addEventListener("touchmove", function(event){
+                gameGrid.addEventListener("touchmove", function(event){
                 element = document.elementFromPoint(
                     event.touches[0].clientX,
                     event.touches[0].clientY
                 )
-
-                // console.log(hasClass(element,"path"))
                 
                 if(hasClass(element,"grid-block")){
                     checkDrawPath(element);
                 }
 
-                // event.preventDefault();
+                event.preventDefault();
+            
             })
 
         }
@@ -277,20 +276,20 @@ function addGridEvents(){
             //     pathMouseDown(this);
             // });
 
-            document.addEventListener("touchstart",function(event){
+            pathBlocks[i].addEventListener("touchstart",function(event){
                 
-                element = document.elementFromPoint(
-                    event.touches[0].clientX,
-                    event.touches[0].clientY
-                )
-
-                // console.log(hasClass(element,"path"))
+                // element = document.elementFromPoint(
+                //     event.touches[0].clientX,
+                //     event.touches[0].clientY
+                // )
                 
-                if(hasClass(element,"path")){
-                    pathMouseDown(element);
-                }
+                // if(hasClass(element,"path")){
+                //     pathMouseDown(element);
+                // }
 
-                // event.preventDefault();
+                pathMouseDown(this);
+
+                event.preventDefault();
 
             })
 
@@ -307,7 +306,7 @@ function addGridEvents(){
 
                 // console.log(hasClass(element,"path"))
                 
-                // event.preventDefault();
+                event.preventDefault();
 
             });
         }
