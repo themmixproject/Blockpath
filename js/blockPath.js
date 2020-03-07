@@ -33,9 +33,9 @@ var gameGrid = document.getElementById("game-grid");
 
 var mainMenu = document.getElementById("main-menu");
 
-var gameWinScreen = document.getElementById("game-win-screen");
+var gameAlertScreen = document.getElementById("game-alert-screen");
 
-var gameWinHeader = document.getElementById("game-win-header");
+var gameAlertHeader = document.getElementById("game-alert-header");
 
 var playButton = document.getElementById("play-button");
 
@@ -120,8 +120,8 @@ function pathMouseEnter(element){
 }
 
 function displayAlert(text){
-    gameWinScreen.style.display = "block";
-    gameWinHeader.innerHTML = text;
+    gameAlertScreen.style.display = "block";
+    gameAlertHeader.innerHTML = text;
 }
 
 function drawPath(x, y, index, previousCoordinates){
@@ -176,7 +176,7 @@ function resetGrid(){
 function hideAllScreens(){
     mainMenu.style.display = "none";
     gameGrid.style.display = "none";
-    gameWinScreen.style.display = "none";
+    gameAlertScreen.style.display = "none";
 }
 
 function displayMainMenu(){
@@ -189,10 +189,10 @@ function displayGameGrid(){
     gameGrid.style.display = "block";
 }
 
-function displayGameWinScreen(){
+function displaygameAlertScreen(){
     hideAllScreens();
     gameGrid.style.display = "block";
-    gameWinScreen.style.display = "block";
+    gameAlertScreen.style.display = "block";
 }
 
 
@@ -212,10 +212,10 @@ function addEventListeners(){
         setMouseDown(false);
     });
 
-    gameWinScreen.addEventListener("click", function(){
+    gameAlertScreen.addEventListener("click", function(){
         if(
-            document.getElementById("game-win-screen").style.display!="none" && 
-            document.getElementById("game-win-screen").style.display!=""
+            gameAlertScreen.style.display!="none" && 
+            gameAlertScreen.style.display!=""
         ){
             if( game.win == true ){
                 nextLevel();
@@ -272,10 +272,10 @@ function addMobileEventListeners(){
         setMouseDown(false);
     });
 
-    gameWinScreen.addEventListener("touchstart", function(){
+    gameAlertScreen.addEventListener("touchstart", function(){
         if(
-            document.getElementById("game-win-screen").style.display!="none" && 
-            document.getElementById("game-win-screen").style.display!=""
+            gameAlertScreen.style.display!="none" && 
+            gameAlertScreen.style.display!=""
         ){
             if( game.win == true ){
                 nextLevel();
@@ -374,6 +374,8 @@ else{
 }
 // mainMenu.style.display = "none";
 displayMainMenu();
+
+// displayAlert("drag the path to fill the grid!");
 
 levels.push(
     new level(3,3,0,2,[4]),
