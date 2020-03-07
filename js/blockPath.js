@@ -211,7 +211,10 @@ function addEventListeners(){
     });
 
     gameWinScreen.addEventListener("click", function(){
-        if(document.getElementById("game-win-screen").style.display!="none" && document.getElementById("game-win-screen").style.display!=""){
+        if(
+            document.getElementById("game-win-screen").style.display!="none" && 
+            document.getElementById("game-win-screen").style.display!=""
+        ){
             if( game.win == true ){
                 nextLevel();
                 game.win = false;
@@ -272,42 +275,21 @@ function addGridEvents(){
     for(i=0; i<pathBlocks.length; i++){
 
         if(isMobile==true){
-            // pathBlocks[i].addEventListener("touchstart", function(event){
-            //     pathMouseDown(this);
-            // });
 
             pathBlocks[i].addEventListener("touchstart",function(event){
-                
-                // element = document.elementFromPoint(
-                //     event.touches[0].clientX,
-                //     event.touches[0].clientY
-                // )
-                
-                // if(hasClass(element,"path")){
-                //     pathMouseDown(element);
-                // }
-
                 pathMouseDown(this);
-
                 event.preventDefault();
-
             })
 
             document.addEventListener("touchmove",function(){
-
                 element = document.elementFromPoint(
                     event.touches[0].clientX,
                     event.touches[0].clientY
-                )
-
+                );
                 if(hasClass(element,"path")){
                     pathMouseDown(element);
                 }
-
-                // console.log(hasClass(element,"path"))
-                
                 event.preventDefault();
-
             });
         }
         else{
