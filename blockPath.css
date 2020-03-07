@@ -133,14 +133,6 @@ div{
     text-align: center;
 }
 
-
-#game-alert-screen-header-wrapper{
-    /* position:absolute;
-    left:50%;
-    top:50%;
-    transform: translate(-50%,-50%); */
-}
-
 #game-alert-header{
     font-size:50px;
     margin-bottom: 20px;
