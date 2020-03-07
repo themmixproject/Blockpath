@@ -206,6 +206,8 @@ function displayGameWinScreen(){
 
 function addEventListeners(){
 
+    console.log("desktop events added");
+
     document.addEventListener("mouseup", function(event){
         setMouseDown(false);
     });
@@ -245,62 +247,96 @@ function addGridEvents(){
     pathBlocks = document.getElementsByClassName("path");
 
     for(i=0; i<gridBlocks.length; i++){
-
-        if(isMobile==true){
-                gameGrid.addEventListener("touchmove", function(event){
-                element = document.elementFromPoint(
-                    event.touches[0].clientX,
-                    event.touches[0].clientY
-                )
-                
-                if(hasClass(element,"grid-block")){
-                    checkDrawPath(element);
-                }
-
-                event.preventDefault();
-            
-            })
-
-        }
-        else{
-            gridBlocks[i].addEventListener("mouseenter", function(event){
-                checkDrawPath(this);
-            })
-        }
-
-
+        gridBlocks[i].addEventListener("mouseenter", function(event){
+            checkDrawPath(this);
+        })
         
     }
 
     for(i=0; i<pathBlocks.length; i++){
+        pathBlocks[i].addEventListener("mousedown", function(event){
+            pathMouseDown(this);
+        });
 
-        if(isMobile==true){
+        pathBlocks[i].addEventListener("mouseenter",function(event){
+            pathMouseEnter(this);
+        });  
+    }
+}
 
+function addMobileEventListeners(){
+    console.log("mobile events added");
+
+    document.addEventListener("touchstart", function(event){
+        console.log("hello world!");
+        setMouseDown(false);
+    });
+
+    gameWinScreen.addEventListener("touchstart", function(){
+        if(
+            document.getElementById("game-win-screen").style.display!="none" && 
+            document.getElementById("game-win-screen").style.display!=""
+        ){
+            if( game.win == true ){
+                nextLevel();
+                game.win = false;
+            }
+            else if( game.end == true ){
+                resetGame();
+                displayMainMenu();
+            }
+            else{
+                displayGameGrid();
+            }
+        }
+    });
+
+    playButton.addEventListener("touchstart", function(){
+        levels[currentLevel].generate();
+        displayGameGrid();
+        displayAlert("drag the path to fill the grid!");
+    })
+
+    /**
+     * grid events are added here as well
+     */
+
+    gameGrid.addEventListener("touchmove", function(event){
+        element = document.elementFromPoint(
+            event.touches[0].clientX,
+            event.touches[0].clientY
+        )
+        if(hasClass(element,"grid-block")){
+            checkDrawPath(element);
+        }
+        event.preventDefault();
+    
+    })
+
+    document.addEventListener("touchmove",function(){
+        element = document.elementFromPoint(
+            event.touches[0].clientX,
+            event.touches[0].clientY
+        );
+        if(hasClass(element,"path")){
+            pathMouseDown(element);
+        }
+        event.preventDefault();
+    });
+
+}
+
+function addMobileGridEvents(){
+
+    console.log("add grid (path) events!");
+
+    pathBlocks = document.getElementsByClassName("path");
+
+    for(i=0; i<pathBlocks.length; i++){
             pathBlocks[i].addEventListener("touchstart",function(event){
                 pathMouseDown(this);
                 event.preventDefault();
             })
-
-            document.addEventListener("touchmove",function(){
-                element = document.elementFromPoint(
-                    event.touches[0].clientX,
-                    event.touches[0].clientY
-                );
-                if(hasClass(element,"path")){
-                    pathMouseDown(element);
-                }
-                event.preventDefault();
-            });
-        }
-        else{
-            pathBlocks[i].addEventListener("mousedown", function(event){
-                pathMouseDown(this);
-            });
-
-            pathBlocks[i].addEventListener("mouseenter",function(event){
-                pathMouseEnter(this);
-            });
-        }    
     }
 
 
@@ -308,15 +344,20 @@ function addGridEvents(){
 }
 
 function bindNewPath(element){
-
-    element.addEventListener("mousedown", function(event){
-        pathMouseDown(this);
-    })
-
-    element.addEventListener("mouseenter",function(event){
-        pathMouseEnter(this);
-    });
-
+    if(isMobile==true){
+        element.addEventListener("touchstart", function(event){
+            pathMouseDown(this);
+        });
+    }
+    else{
+        element.addEventListener("mousedown", function(event){
+            pathMouseDown(this);
+        })
+    
+        element.addEventListener("mouseenter",function(event){
+            pathMouseEnter(this);
+        });
+    }
 }
 
 /*#####################################################\
@@ -325,7 +366,12 @@ function bindNewPath(element){
  *|                                                    # 
 \#####################################################*/
 // drawGrid();
-addEventListeners();
+if(isMobile == true){
+ addMobileEventListeners();
+}
+else{
+    addEventListeners();  
+}
 // mainMenu.style.display = "none";
 displayMainMenu();
 

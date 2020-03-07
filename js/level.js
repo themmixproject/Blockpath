@@ -44,8 +44,12 @@ class level {
 
         this.drawRedBlocks();
 
-        addGridEvents();
-
+        if(isMobile==true){
+            addMobileGridEvents();
+        }
+        else{
+            addGridEvents();
+        }
     }
 
     drawRedBlocks(){
