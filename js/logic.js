@@ -8,10 +8,10 @@ function checkDifferent(index){
     return true;
 }
 
-function checkDrawPath(el){
+function checkDrawPath(el, gridWidth){
     if(game.mouseDown == true && el.innerHTML==""){
 
-        var x = indexInClass(el)%levels[currentLevel].gridWidth;
+        var x = indexInClass(el)%gridWidth;
         var y = indexInClass(el.parentElement)
         var index = indexInClass(el)
 

@@ -13,6 +13,10 @@
 
 /**
  * TO MOORE AWAKE STEVEN
+ * ---------------------
+ * 
+ * EDIT GAME LOGIC SO THAT IT'S ADJUSTED TO THE NEW 
+ * CURRENTLEVEL DATA STRUCTURE.
  * 
  * 
  */
@@ -294,7 +298,7 @@ function addEventListeners(){
 
 }
 
-function addGridEvents(){
+function addGridEvents(gridWidth){
 
     console.log("add grid events!");
 
@@ -302,7 +306,7 @@ function addGridEvents(){
 
     for(i=0; i<gridBlocks.length; i++){
         gridBlocks[i].addEventListener("mouseenter", function(event){
-            checkDrawPath(this);
+            checkDrawPath(this, gridWidth);
         })
         
     }
@@ -318,7 +322,7 @@ function addGridEvents(){
     }
 }
 
-function addMobileEventListeners(){
+function addMobileEventListeners(gridWidth){
     console.log("mobile events added");
 
     document.addEventListener("touchstart", function(event){
@@ -347,7 +351,7 @@ function addMobileEventListeners(){
 
     playButton.addEventListener("touchstart", function(){
         levels[currentLevel].generate();
-        displayGameGrid();
+        displayGameGrid(gridWidth);
         displayAlert("drag the path to fill the grid!");
     })
 
@@ -427,28 +431,32 @@ else{
     addEventListeners();
 }
 
-displayMainMenu();
+// displayMainMenu();
 // mainMenu.style.display = "none";
 // displayLevelScreen();
 
-// displayGameGrid();
-
-levels.push(
-    new level(3,3,0,2,[4]),
-    new level(7,4,0,4,[10,14,22,23,27]),
-    new level(8,6,1,0,[10,19, 28, 30, 36, 37, 45]),
-    new level(6,5,0,0,[8,13,11,28]),
-    new level(7 ,5, 0,0,[1,2,3,10,17,22]),
-    new level(8,6,4,4,[11,13,14,19,27,29,46,47])
-)
+displayGameGrid();
 
 // levels.push(
-//     [
-//         new level(3,3,0,2,[4])
-//     ]
+//     new level(3,3,0,2,[4]),
+//     new level(7,4,0,4,[10,14,22,23,27]),
+//     new level(8,6,1,0,[10,19, 28, 30, 36, 37, 45]),
+//     new level(6,5,0,0,[8,13,11,28]),
+//     new level(7 ,5, 0,0,[1,2,3,10,17,22]),
+//     new level(8,6,4,4,[11,13,14,19,27,29,46,47])
 // )
 
-// levels[0][0].generate();
+// levels[currentLevel].generate();
+
+levels.push(
+    [
+        new level(3,3,0,2,[4])
+    ]
+)
+
+console.log(levels[0][0]);
+
+levels[0][0].generate();
 
 // levels[currentLevel].generate();
 // drawTestPath();
