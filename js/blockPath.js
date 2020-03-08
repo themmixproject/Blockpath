@@ -39,6 +39,10 @@ var gameAlertHeader = document.getElementById("game-alert-header");
 
 var playButton = document.getElementById("play-button");
 
+var gameLevelScreen = document.getElementById("game-level-screen");
+
+var levelGrid = document.getElementById("level-grid");
+
 var levels = [];
 var currentLevel = 0;
 
@@ -48,6 +52,14 @@ var grid = {
     blockHeight:46,
     blockWidth:46,
     blockMargin:2,
+}
+
+var gameLevelGrid = {
+    height: 7,
+    width: 5,
+    blockHeight: 50,
+    blockWidth: 50,
+    blockMargin: 2
 }
 
 var game = {
@@ -173,10 +185,47 @@ function resetGrid(){
  *|                                                    # 
 \#####################################################*/
 
+function renderLevelButtons(){
+    console.log("render levels");
+
+    var levelCounter = 1;
+    for(i=0;i<7;i++){
+        
+        row = document.createElement("div");
+        row.className = "grid-row";
+        
+        for(o=0;o<5;o++){
+            el=document.createElement("div");
+            el.className = "level-button";
+            el.style.height = gameLevelGrid.blockHeight+"px";
+            el.style.width = gameLevelGrid.blockWidth+"px";
+            el.style.margin = gameLevelGrid.blockMargin+"px";
+
+            levelText = document.createElement("div");
+            levelText.className= "level-text";
+            levelText.textContent = levelCounter;
+
+            el.append(levelText);
+
+            row.append(el);
+
+            levelCounter++;
+        }
+
+        levelGrid.style.width = (gameLevelGrid.blockWidth+gameLevelGrid.blockMargin*2)*gameLevelGrid.width+"px";
+        levelGrid.style.height = (gameLevelGrid.blockHeight+gameLevelGrid.blockMargin*2)*gameLevelGrid.height+"px";
+
+        levelGrid.append(row);
+    }
+
+
+}
+
 function hideAllScreens(){
     mainMenu.style.display = "none";
     gameGrid.style.display = "none";
     gameAlertScreen.style.display = "none";
+    gameLevelScreen.style.display = "none";
 }
 
 function displayMainMenu(){
@@ -195,6 +244,11 @@ function displaygameAlertScreen(){
     gameAlertScreen.style.display = "block";
 }
 
+function displayLevelScreen(){
+    hideAllScreens();
+    renderLevelButtons();
+    gameLevelScreen.style.display = "block";
+}
 
 
 /*#####################################################\
@@ -370,12 +424,14 @@ if(isMobile == true){
  addMobileEventListeners();
 }
 else{
-    addEventListeners();  
+    addEventListeners();
 }
-// mainMenu.style.display = "none";
-displayMainMenu();
 
-// displayAlert("drag the path to fill the grid!");
+displayMainMenu();
+// mainMenu.style.display = "none";
+// displayLevelScreen();
+
+// displayGameGrid();
 
 levels.push(
     new level(3,3,0,2,[4]),
@@ -385,6 +441,15 @@ levels.push(
     new level(7 ,5, 0,0,[1,2,3,10,17,22]),
     new level(8,6,4,4,[11,13,14,19,27,29,46,47])
 )
+
+// levels.push(
+//     [
+//         new level(3,3,0,2,[4])
+//     ]
+// )
+
+// levels[0][0].generate();
+
 // levels[currentLevel].generate();
 // drawTestPath();
 // drawRedBlock();
