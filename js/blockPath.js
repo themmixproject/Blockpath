@@ -15,9 +15,10 @@
  * TO MOORE AWAKE STEVEN
  * ---------------------
  * 
- * EDIT GAME LOGIC SO THAT IT'S ADJUSTED TO THE NEW 
- * CURRENTLEVEL DATA STRUCTURE.
+ *  - MAYBE CHANGE EVENT BINDING ON LEVEL BUTTONS
  * 
+ *  - COMPRESS EVENT LISTENERS
+ *    - Worst case split into different file
  * 
  */
 
@@ -45,10 +46,14 @@ var playButton = document.getElementById("play-button");
 
 var gameLevelScreen = document.getElementById("game-level-screen");
 
+var worldHeader = document.getElementById("world-header");
+
 var levelGrid = document.getElementById("level-grid");
 
-var levels = [];
+var levels;
+
 var currentLevel = 0;
+var currentWorld = 0;
 
 var grid = {
     height:4,
@@ -183,6 +188,58 @@ function resetGrid(){
     gameGrid.innerHTML = "";
 }
 
+function generateLevel(level){
+    mainMenu.style.display = "none";
+
+    for(var i=0; i<level.gridHeight; i++){
+        var row=document.createElement("div");
+        row.className = "grid-row";
+        gameGrid.append(row)
+        for(var e=0;e<level.gridWidth;e++){
+            var el = document.createElement("div");
+            el.className="grid-block";
+            el.style.height = grid.blockHeight + "px";
+            el.style.width = grid.blockWidth + "px";
+            el.style.margin = grid.blockMargin + "px";
+            row.append(el);
+        }
+    }
+
+    gameGrid.style.width = (grid.blockWidth+grid.blockMargin*2)*level.gridWidth+"px";
+    gameGrid.style.height = (grid.blockHeight+grid.blockMargin*2)*level.gridHeight+"px";
+
+    var pathStart = document.createElement("div");
+    pathStart.id = "path-start";
+    pathStart.className = "path";
+    pathStart.style.height = grid.blockHeight + "px";
+    pathStart.style.width = grid.blockWidth + "px";
+
+    document.getElementsByClassName("grid-row")[level.pathStartY].getElementsByClassName("grid-block")[level.pathStartX].append(pathStart);
+
+    game.coordinates.push([level.pathStartX, level.pathStartY, indexInClass(pathStart)])
+    game.path.push(indexInClass(pathStart.parentElement))
+
+    pathBlocks = document.getElementsByClassName("path");
+
+    level.drawRedBlocks();
+
+    if(isMobile==true){
+        addMobileGridEvents(level.gridWidth);
+    }
+    else{
+        addGridEvents(level.gridWidth);
+    }
+
+    displayGameGrid();
+
+}
+
+function parseTest(parse){
+
+    console.log(parse);
+
+}
+
 /*#####################################################\
  *|                                                    #
  *| 3. display functions                               #
@@ -191,6 +248,8 @@ function resetGrid(){
 
 function renderLevelButtons(){
     console.log("render levels");
+
+    worldHeader.textContent = "World " + ++currentWorld;
 
     var levelCounter = 1;
     for(i=0;i<7;i++){
@@ -222,6 +281,7 @@ function renderLevelButtons(){
         levelGrid.append(row);
     }
 
+    addLevelButtonEvents();
 
 }
 
@@ -418,6 +478,20 @@ function bindNewPath(element){
     }
 }
 
+function addLevelButtonEvents(){
+    var levelButtons = document.getElementsByClassName("level-button");
+
+    levelCounter = 0;
+
+    for(i=0; i<levelButtons.length; i++){
+        levelButtons[i].addEventListener("click", function(event){
+            levels[currentWorld][indexInClass(this)].generate();
+            displayGameGrid();
+        })
+        levelCounter++;
+    }
+}
+
 /*#####################################################\
  *|                                                    #
  *| 5. Initialization                                  #
@@ -433,7 +507,7 @@ else{
 
 // displayMainMenu();
 // mainMenu.style.display = "none";
-// displayLevelScreen();
+displayLevelScreen();
 
 // displayGameGrid();
 
