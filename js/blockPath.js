@@ -42,6 +42,8 @@ var gameGridScreen = document.getElementById("game-grid-screen");
 
 var levelBackButton = document.getElementById("level-back-button");
 
+var gameLevelHeader = document.getElementById("game-level-header");
+
 var mainMenu = document.getElementById("main-menu");
 
 var gameAlertScreen = document.getElementById("game-alert-screen");
@@ -362,13 +364,18 @@ function addEventListeners(){
             gameAlertScreen.style.display!=""
         ){
             if( game.win == true ){
+                console.log("finished level");
                 if(currentLevel == levels[currentWorld].length-1){
+
+                    console.log("finished world");
+
                     game.win=false;
                     nextWorld();
                     resetGrid();
                     displayLevelScreen();
                 }
                 else if( game.end == true ){
+                    console.log("finished game");
                     resetGame();
                     displayLevelScreen();
                 }
@@ -405,7 +412,7 @@ function addEventListeners(){
 
 function addGridEvents(gridWidth){
 
-    console.log("add grid events!");
+    // console.log("add grid events!");
 
     pathBlocks = document.getElementsByClassName("path");
 
@@ -526,9 +533,9 @@ function addLevelButtonEvents(){
 
     for(i=0; i<levelButtons.length; i++){
         levelButtons[i].addEventListener("click", function(event){
+            currentLevel = indexInClass(this);
             levels[currentWorld][indexInClass(this)].generate();
             displayGameGridScreen();
-            currentLevel = indexInClass(this);
         })
         levelCounter++;
     }
@@ -556,7 +563,8 @@ displayMainMenu();
 
 // displayGameGridScreen();
 
-// levels[0][0].generate();
+// currentLevel = 5;
+// levels[0][5].generate();
 
 
 

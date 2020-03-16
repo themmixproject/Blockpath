@@ -13,6 +13,12 @@ class level {
         resetGrid();
 
         mainMenu.style.display = "none";
+
+        var displayWorld = currentWorld+1;
+
+        var displayLevel = currentLevel+1;
+    
+        gameLevelHeader.textContent = displayWorld +" - " + displayLevel;
         
         for(var i=0; i<this.gridHeight; i++){
             var row=document.createElement("div");

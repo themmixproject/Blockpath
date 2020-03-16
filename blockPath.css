@@ -59,6 +59,12 @@ div{
     color:lightslategray;
 }
 
+#game-level-header{
+    font-size: 20px;
+    color:lightslategray;
+    text-align: center;
+}
+
 /* #grid-wrapper{
  position: relative;
     height: 100%;

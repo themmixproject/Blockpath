@@ -31,7 +31,8 @@ function checkDrawPath(el, gridWidth){
             ){
                 drawPath(x, y, index, previousCoordinates);
                 if( game.path.length == levels[currentWorld][currentLevel].pathLength ){
-                    if(currentLevel == levels.length-1){
+                    console.log("finished something?");
+                    if(currentWorld == levels.length-1 && currentLevel == levels[levels.length-1].length){
                         game.end = true;
                         displayAlert("Level Completed!");
                         // displayLevelScreen();
