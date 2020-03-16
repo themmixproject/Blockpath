@@ -158,11 +158,56 @@ div{
     touch-action: none;
     display: none;
     text-align: center;
+    font-size: 0px;
+}
+
+#level-grid-header{
+    position:relative;
+    display: inline-block;
+    margin-bottom: 5px;
+    height:30px;
+    font-size:0px;
 }
 
 #world-header{
+    /* display: inline-block; */
+    position: relative;
+    /* text-align: center; */
     color: lightslategray;
     font-size:20px;
+    float:left;
+    width: 85px;
+    margin-left:10px;
+    margin-right:10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    
+}
+
+#previous-world-button{
+    height:20px;
+    width: 20px;
+    float:left;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#next-world-button{
+    height:20px;
+    width: 20px;
+    float: left;
+    position: relative;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+.ui-arrow{
+    height:20px;
+    width: 20px;
 }
 
 .level-button{

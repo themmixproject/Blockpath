@@ -20,6 +20,8 @@
  *  - COMPRESS EVENT LISTENERS
  *    - Worst case split into different file
  * 
+ *  - MAKE UI ARROW IMAGES BACKGROUNDS OF DIVS
+ * 
  */
 
 /*#####################################################\
@@ -47,6 +49,10 @@ var playButton = document.getElementById("play-button");
 var gameLevelScreen = document.getElementById("game-level-screen");
 
 var worldHeader = document.getElementById("world-header");
+
+var nextWorldButton = document.getElementById("next-world-button");
+
+var previousWorldButton = document.getElementById("previous-world-button");
 
 var levelGrid = document.getElementById("level-grid");
 
@@ -249,7 +255,7 @@ function parseTest(parse){
 function renderLevelButtons(){
     console.log("render levels");
 
-    worldHeader.textContent = "World " + ++currentWorld;
+    worldHeader.textContent = "World " + currentWorld;
 
     var levelCounter = 1;
     for(i=0;i<7;i++){
