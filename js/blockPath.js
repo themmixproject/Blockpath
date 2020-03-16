@@ -235,12 +235,7 @@ function generateLevel(level){
 
     level.drawRedBlocks();
 
-    if(isMobile==true){
-        addMobileGridEvents(level.gridWidth);
-    }
-    else{
-        addGridEvents(level.gridWidth);
-    }
+    addGridEvents(level.gridWidth);
 
     displayGameGridScreen();
 
@@ -354,7 +349,7 @@ function addEventListeners(){
 
     console.log("desktop events added");
 
-    document.addEventListener("mouseup", function(event){
+    document.addEventListener("mouseup", function(){
         setMouseDown(false);
     });
 
@@ -394,6 +389,7 @@ function addEventListeners(){
 
     playButton.addEventListener("click", function(){
         displayLevelScreen();
+        event
     })
 
     previousWorldButton.addEventListener("click", function(){
@@ -407,6 +403,99 @@ function addEventListeners(){
     levelBackButton.addEventListener("click", function(){
         displayLevelScreen();
     });
+
+    // 
+    // MOBILE SHIT
+    // 
+
+    console.log("mobile events added");
+
+    document.addEventListener("touchstart", function(event){
+        // console.log("hello world!");
+        setMouseDown(false);
+        event.preventDefault();
+    });
+
+    gameAlertScreen.addEventListener("touchstart", function(event){
+        if(
+            gameAlertScreen.style.display!="none" && 
+            gameAlertScreen.style.display!=""
+        ){
+            if( game.win == true ){
+                console.log("finished level");
+                if(currentLevel == levels[currentWorld].length-1){
+
+                    console.log("finished world");
+
+                    game.win=false;
+                    nextWorld();
+                    resetGrid();
+                    displayLevelScreen();
+                }
+                else if( game.end == true ){
+                    console.log("finished game");
+                    resetGame();
+                    displayLevelScreen();
+                }
+                else{
+                    game.win = false;
+                    nextLevel();
+                }
+            }
+            else{
+                displayGameGridScreen();
+            }
+        }
+        event.preventDefault();
+    });
+
+    playButton.addEventListener("touchstart", function(){
+        displayLevelScreen();
+        event.preventDefault();
+    })
+
+    previousWorldButton.addEventListener("touchstart", function(){
+        previousWorld();
+        event.preventDefault();
+    });
+
+    nextWorldButton.addEventListener("touchstart", function(){
+        nextWorld();
+        event.preventDefault();
+    });
+
+    levelBackButton.addEventListener("touchstart", function(){
+        displayLevelScreen();
+        event.preventDefault();
+    });
+
+    /**
+     * grid events are added here as well
+     */
+
+    gameGrid.addEventListener("touchmove", function(event){
+        element = document.elementFromPoint(
+            event.touches[0].clientX,
+            event.touches[0].clientY
+        )
+        if(hasClass(element,"grid-block")){
+            checkDrawPath(element,levels[currentWorld][currentLevel].gridWidth);
+        }
+        event.preventDefault();
+    
+    })
+
+    document.addEventListener("touchmove",function(){
+        element = document.elementFromPoint(
+            event.touches[0].clientX,
+            event.touches[0].clientY
+        );
+        if(hasClass(element,"path")){
+            pathMouseDown(element);
+        }
+        event.preventDefault();
+    });
+
 
 }
 
@@ -432,82 +521,82 @@ function addGridEvents(gridWidth){
             pathMouseEnter(this);
         });  
     }
-}
 
-function addMobileEventListeners(gridWidth){
-    console.log("mobile events added");
-
-    document.addEventListener("touchstart", function(event){
-        console.log("hello world!");
-        setMouseDown(false);
-    });
-
-    gameAlertScreen.addEventListener("touchstart", function(){
-        if(
-            gameAlertScreen.style.display!="none" && 
-            gameAlertScreen.style.display!=""
-        ){
-            if( game.win == true ){
-                nextLevel();
-                game.win = false;
-            }
-            // else if( game.end == true ){
-            //     resetGame();
-            //     displayMainMenu();
-            // }
-
-        }
-    });
-
-    playButton.addEventListener("touchstart", function(){
-        // levels[currentLevel].generate();
-        // displayGameGridScreen(gridWidth);
-        // displayAlert("drag the path to fill the grid!");
-        displayLevelScreen();
-    })
-
-    /**
-     * grid events are added here as well
-     */
-
-    gameGrid.addEventListener("touchmove", function(event){
-        element = document.elementFromPoint(
-            event.touches[0].clientX,
-            event.touches[0].clientY
-        )
-        if(hasClass(element,"grid-block")){
-            checkDrawPath(element);
-        }
-        event.preventDefault();
-    
-    })
-
-    document.addEventListener("touchmove",function(){
-        element = document.elementFromPoint(
-            event.touches[0].clientX,
-            event.touches[0].clientY
-        );
-        if(hasClass(element,"path")){
-            pathMouseDown(element);
-        }
-        event.preventDefault();
-    });
-
-}
-
-function addMobileGridEvents(){
+    // MOBILE SHIT
 
     console.log("add grid (path) events!");
 
     pathBlocks = document.getElementsByClassName("path");
 
     for(i=0; i<pathBlocks.length; i++){
-            pathBlocks[i].addEventListener("touchstart",function(event){
-                pathMouseDown(this);
-                event.preventDefault();
-            })
+        pathBlocks[i].addEventListener("touchstart",function(event){
+            console.log("path touch");
+            pathMouseDown(this);
+            // event.preventDefault();
+        })
     }
 }
+
+// function addMobileEventListeners(gridWidth){
+//     console.log("mobile events added");
+
+//     document.addEventListener("touchstart", function(event){
+//         console.log("hello world!");
+//         setMouseDown(false);
+//     });
+
+//     gameAlertScreen.addEventListener("touchstart", function(){
+//         if(
+//             gameAlertScreen.style.display!="none" && 
+//             gameAlertScreen.style.display!=""
+//         ){
+//             if( game.win == true ){
+//                 nextLevel();
+//                 game.win = false;
+//             }
+//             // else if( game.end == true ){
+//             //     resetGame();
+//             //     displayMainMenu();
+//             // }
+
+//         }
+//     });
+
+//     playButton.addEventListener("touchstart", function(){
+//         // levels[currentLevel].generate();
+//         // displayGameGridScreen(gridWidth);
+//         // displayAlert("drag the path to fill the grid!");
+//         displayLevelScreen();
+//     })
+
+//     /**
+//      * grid events are added here as well
+//      */
+
+//     gameGrid.addEventListener("touchmove", function(event){
+//         element = document.elementFromPoint(
+//             event.touches[0].clientX,
+//             event.touches[0].clientY
+//         )
+//         if(hasClass(element,"grid-block")){
+//             checkDrawPath(element);
+//         }
+//         event.preventDefault();
+    
+//     })
+
+//     document.addEventListener("touchmove",function(){
+//         element = document.elementFromPoint(
+//             event.touches[0].clientX,
+//             event.touches[0].clientY
+//         );
+//         if(hasClass(element,"path")){
+//             pathMouseDown(element);
+//         }
+//         event.preventDefault();
+//     });
+
+// }
 
 function bindNewPath(element){
     if(isMobile==true){
@@ -547,12 +636,14 @@ function addLevelButtonEvents(){
  *|                                                    # 
 \#####################################################*/
 // drawGrid();
-if(isMobile == true){
- addMobileEventListeners();
-}
-else{
-    addEventListeners();
-}
+// if(isMobile == true){
+//  addMobileEventListeners();
+// }
+// else{
+//     addEventListeners();
+// }
+
+addEventListeners();
 
 displayMainMenu();
 
@@ -563,8 +654,8 @@ displayMainMenu();
 
 // displayGameGridScreen();
 
-// currentLevel = 5;
-// levels[0][5].generate();
+// currentLevel = 0;
+// levels[0][0].generate();
 
 
 

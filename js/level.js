@@ -52,12 +52,8 @@ class level {
 
         this.drawRedBlocks();
 
-        if(isMobile==true){
-            addMobileGridEvents(this.gridWidth);
-        }
-        else{
-            addGridEvents(this.gridWidth);
-        }
+        addGridEvents(this.gridWidth);
+
     }
 
     drawRedBlocks(){
