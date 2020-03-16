@@ -80,5 +80,5 @@ function nextLevel(){
     resetGrid();
     currentLevel+=1;
     levels[currentWorld][currentLevel].generate();
-    displayGameGrid();
+    displayGameGridScreen();
 }

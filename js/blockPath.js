@@ -38,6 +38,10 @@ var gridRow = document.getElementsByClassName("grid-row");
 
 var gameGrid = document.getElementById("game-grid");
 
+var gameGridScreen = document.getElementById("game-grid-screen");
+
+var levelBackButton = document.getElementById("level-back-button");
+
 var mainMenu = document.getElementById("main-menu");
 
 var gameAlertScreen = document.getElementById("game-alert-screen");
@@ -236,7 +240,7 @@ function generateLevel(level){
         addGridEvents(level.gridWidth);
     }
 
-    displayGameGrid();
+    displayGameGridScreen();
 
 }
 
@@ -309,7 +313,7 @@ function renderLevelButtons(){
 
 function hideAllScreens(){
     mainMenu.style.display = "none";
-    gameGrid.style.display = "none";
+    gameGridScreen.style.display = "none";
     gameAlertScreen.style.display = "none";
     gameLevelScreen.style.display = "none";
 }
@@ -319,9 +323,9 @@ function displayMainMenu(){
     mainMenu.style.display = "block";
 }
 
-function displayGameGrid(){
+function displayGameGridScreen(){
     hideAllScreens();
-    gameGrid.style.display = "block";
+    gameGridScreen.style.display = "block";
 }
 
 function displaygameAlertScreen(){
@@ -376,7 +380,7 @@ function addEventListeners(){
             }
 
             else{
-                displayGameGrid();
+                displayGameGridScreen();
             }
         }
     });
@@ -391,6 +395,10 @@ function addEventListeners(){
 
     nextWorldButton.addEventListener("click", function(){
         nextWorld();
+    });
+
+    levelBackButton.addEventListener("click", function(){
+        displayLevelScreen();
     });
 
 }
@@ -446,7 +454,7 @@ function addMobileEventListeners(gridWidth){
 
     playButton.addEventListener("touchstart", function(){
         // levels[currentLevel].generate();
-        // displayGameGrid(gridWidth);
+        // displayGameGridScreen(gridWidth);
         // displayAlert("drag the path to fill the grid!");
         displayLevelScreen();
     })
@@ -519,7 +527,7 @@ function addLevelButtonEvents(){
     for(i=0; i<levelButtons.length; i++){
         levelButtons[i].addEventListener("click", function(event){
             levels[currentWorld][indexInClass(this)].generate();
-            displayGameGrid();
+            displayGameGridScreen();
             currentLevel = indexInClass(this);
         })
         levelCounter++;
@@ -540,10 +548,17 @@ else{
 }
 
 displayMainMenu();
+
+
+
 // mainMenu.style.display = "none";
 // displayLevelScreen();
 
-// displayGameGrid();
+// displayGameGridScreen();
+
+// levels[0][0].generate();
+
+
 
 // levels.push(
 //     new level(3,3,0,2,[4]),

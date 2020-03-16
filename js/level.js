@@ -10,8 +10,10 @@ class level {
 
     generate(){
 
-        mainMenu.style.display = "none";
+        resetGrid();
 
+        mainMenu.style.display = "none";
+        
         for(var i=0; i<this.gridHeight; i++){
             var row=document.createElement("div");
             row.className = "grid-row";
