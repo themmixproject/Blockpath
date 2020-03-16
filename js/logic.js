@@ -30,13 +30,14 @@ function checkDrawPath(el, gridWidth){
                 differenceY <= 1 && differenceY >= -1 && differenceX === 0
             ){
                 drawPath(x, y, index, previousCoordinates);
-                if( game.path.length == levels[currentLevel].pathLength ){
+                if( game.path.length == levels[currentWorld][currentLevel].pathLength ){
                     if(currentLevel == levels.length-1){
                         game.end = true;
-                        displayAlert("You have finished the game");
+                        displayAlert("Level Completed!");
+                        // displayLevelScreen();
                     }
                     else{
-                        displayAlert("You Win! buddy!");
+                        displayAlert("Level Completed!");
                         game.win=true;
                     }
                 }
@@ -78,6 +79,6 @@ function checkIndex(index){
 function nextLevel(){
     resetGrid();
     currentLevel+=1;
-    levels[currentLevel].generate();
+    levels[currentWorld][currentLevel].generate();
     displayGameGrid();
 }

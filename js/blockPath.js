@@ -358,13 +358,23 @@ function addEventListeners(){
             gameAlertScreen.style.display!=""
         ){
             if( game.win == true ){
-                nextLevel();
-                game.win = false;
+                if(currentLevel == levels[currentWorld].length-1){
+                    game.win=false;
+                    nextWorld();
+                    resetGrid();
+                    displayLevelScreen();
+                }
+                else if( game.end == true ){
+                    resetGame();
+                    displayLevelScreen();
+                }
+                else{
+                    game.win = false;
+                    nextLevel();
+                }
+                
             }
-            else if( game.end == true ){
-                resetGame();
-                displayMainMenu();
-            }
+
             else{
                 displayGameGrid();
             }
@@ -372,10 +382,7 @@ function addEventListeners(){
     });
 
     playButton.addEventListener("click", function(){
-        // displayGameGrid();
-        levels[currentLevel].generate();
-        displayGameGrid();
-        displayAlert("drag the path to fill the grid!");
+        displayLevelScreen();
     })
 
     previousWorldButton.addEventListener("click", function(){
@@ -429,20 +436,19 @@ function addMobileEventListeners(gridWidth){
                 nextLevel();
                 game.win = false;
             }
-            else if( game.end == true ){
-                resetGame();
-                displayMainMenu();
-            }
-            else{
-                displayGameGrid();
-            }
+            // else if( game.end == true ){
+            //     resetGame();
+            //     displayMainMenu();
+            // }
+
         }
     });
 
     playButton.addEventListener("touchstart", function(){
-        levels[currentLevel].generate();
-        displayGameGrid(gridWidth);
-        displayAlert("drag the path to fill the grid!");
+        // levels[currentLevel].generate();
+        // displayGameGrid(gridWidth);
+        // displayAlert("drag the path to fill the grid!");
+        displayLevelScreen();
     })
 
     /**
@@ -486,9 +492,6 @@ function addMobileGridEvents(){
                 event.preventDefault();
             })
     }
-
-
-
 }
 
 function bindNewPath(element){
@@ -517,6 +520,7 @@ function addLevelButtonEvents(){
         levelButtons[i].addEventListener("click", function(event){
             levels[currentWorld][indexInClass(this)].generate();
             displayGameGrid();
+            currentLevel = indexInClass(this);
         })
         levelCounter++;
     }
@@ -535,9 +539,9 @@ else{
     addEventListeners();
 }
 
-// displayMainMenu();
+displayMainMenu();
 // mainMenu.style.display = "none";
-displayLevelScreen();
+// displayLevelScreen();
 
 // displayGameGrid();
 
