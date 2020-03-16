@@ -240,10 +240,24 @@ function generateLevel(level){
 
 }
 
-function parseTest(parse){
+function previousWorld(){
+    if(currentWorld==0){
+        console.log("do nothing");
+    }
+    else{
+        currentWorld--;
+        renderLevelButtons();
+    }
+}
 
-    console.log(parse);
-
+function nextWorld(){
+    if(currentWorld<levels.length-1){
+        currentWorld++;
+        renderLevelButtons();
+    }
+    else{
+        console.log("do nothing");
+    }
 }
 
 /*#####################################################\
@@ -253,9 +267,11 @@ function parseTest(parse){
 \#####################################################*/
 
 function renderLevelButtons(){
-    console.log("render levels");
 
-    worldHeader.textContent = "World " + currentWorld;
+    displayWorldIndex = currentWorld+1;
+    worldHeader.textContent = "World " + displayWorldIndex;
+
+    levelGrid.innerHTML = "";
 
     var levelCounter = 1;
     for(i=0;i<7;i++){
@@ -361,6 +377,14 @@ function addEventListeners(){
         displayGameGrid();
         displayAlert("drag the path to fill the grid!");
     })
+
+    previousWorldButton.addEventListener("click", function(){
+        previousWorld();
+    });
+
+    nextWorldButton.addEventListener("click", function(){
+        nextWorld();
+    });
 
 }
 
