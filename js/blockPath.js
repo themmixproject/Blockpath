@@ -100,7 +100,7 @@ if(Cookies.get("progress") == undefined || Cookies.get("progress") == null){
     progressLevel =  0;
     progressWorld = 0;
 
-    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel},{expires:7}));
 
 }
 else{
@@ -396,7 +396,7 @@ function alertScreenEvent(){
                 if(progressWorld<=currentWorld && progressWorld < levels.length-1){
                     progressWorld++;
                     progressLevel = 0;
-                    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+                    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel},{expires:7}));
                 }
 
                 game.win=false;

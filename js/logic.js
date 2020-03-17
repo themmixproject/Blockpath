@@ -84,7 +84,7 @@ function nextLevel(){
     if(currentWorld==progressWorld){
         if(progressLevel-currentLevel==-1){
             progressLevel++;
-            Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+            Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel},{expires:7}));
         }
     }
 
