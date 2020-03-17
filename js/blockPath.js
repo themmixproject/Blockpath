@@ -422,6 +422,11 @@ function alertScreenEvent(){
     }
 }
 
+function levelButtonEvent(element){
+    currentLevel = indexInClass(element);
+    levels[currentWorld][indexInClass(element)].generate();
+    displayGameGridScreen();
+}
 
 
 /*#####################################################\
@@ -557,7 +562,7 @@ function addGridEvents(gridWidth){
         pathBlocks[i].addEventListener("touchstart",function(event){
             console.log("path touch");
             pathMouseDown(this);
-            // event.preventDefault();
+            event.preventDefault();
         })
     }
 }
@@ -587,10 +592,12 @@ function addLevelButtonEvents(){
     for(i=0; i<levelButtons.length; i++){
         if(!hasClass(levelButtons[i],"level-locked")){
             levelButtons[i].addEventListener("click", function(event){
-                currentLevel = indexInClass(this);
-                levels[currentWorld][indexInClass(this)].generate();
-                displayGameGridScreen();
-            })            
+                levelButtonEvent(this);
+            })
+            levelButtons[i].addEventListener("touchstart", function(event){
+                levelButtonEvent(this);
+                event.preventDefault();
+            })
         }
 
         levelCounter++;
@@ -612,9 +619,9 @@ displayMainMenu();
 
 // displayLevelScreen();
 
-currentLevel = 34;
-displayGameGridScreen();
-levels[0][34].generate();
+// currentLevel = 34;
+// displayGameGridScreen();
+// levels[0][34].generate();
 // currentLevel = 3;
 // levels[0][3].generate();
 
