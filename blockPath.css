@@ -76,18 +76,18 @@ div{
     width:100px; */
     background-color:lightgray;
     float:left;
-    margin:5px;
+    /* margin:5px; */
     /*display: inline-block;*/
 }
 .grid-block-red{
     height:100px;
     width:100px;
-    background-color:rgb(255, 90, 90);
+    background-color:rgb(255, 112, 112);
 }
 .path{
     height:100px;
     width:100px;
-    background-color:rgb(89, 163, 255);
+    background-color:rgb(89, 194, 255);
 }
 
 .path.bottom{
@@ -122,7 +122,7 @@ div{
 }
 
 .header-blue{
-    color:rgb(89, 163, 255);
+    color:rgb(89, 194, 255);
 }
 
 .header-red{
@@ -130,12 +130,12 @@ div{
 }
 
 .menu-option{
-    background-color:rgb(89, 163, 255);
+    background-color:rgb(89, 194, 255);
     margin:10px;
     padding:15px;
     text-align:center;
     font-size:25px;
-    color:white;
+    color:black;
 }
 
 .menu-option:hover{
@@ -252,12 +252,12 @@ div{
     /* width:200px; */
     float: left;
     /* margin: 2px; */
-    background-color:rgb(89, 163, 255);
+    background-color:rgb(89, 194, 255);
     position: relative;
 }
 
 .level-locked{
-    background-color: lightslategray;
+    background-color: lightgray;
 }
 
 .level-text{
@@ -265,6 +265,6 @@ div{
     left:50%;
     top:50%;
     transform: translate(-50%,-50%);
-    color:white;
+    color:black;
     font-size: 20px;
 }

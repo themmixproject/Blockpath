@@ -72,7 +72,7 @@ var grid = {
     width:4,
     blockHeight:46,
     blockWidth:46,
-    blockMargin:2,
+    blockMargin:1,
 }
 
 var gameLevelGrid = {
