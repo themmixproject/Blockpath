@@ -1,4 +1,4 @@
-html{
+body, html{
     touch-action: none;
 }
 body{
@@ -173,8 +173,8 @@ div{
 #game-alert-header{
     font-size:50px;
     margin-bottom: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
+    /* padding-left: 30px;
+    padding-right: 30px; */
 }
 
 #next-level-button{
