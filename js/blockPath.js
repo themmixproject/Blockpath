@@ -93,13 +93,30 @@ var game = {
     win: false,
 }
 
-var progressLevel =  0;
+console.log(Cookies.get("progress"));
 
-var progressWorld = 0;
+    var progressLevel = 0;
+    var progressWorld = 0;
+
+if(Cookies.get("progress") == undefined || Cookies.get("progress") == null){
+    progressLevel =  0;
+    progressWorld = 0;
+
+    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+
+}
+else{
+    progress = JSON.parse(Cookies.get("progress"));
+
+    progressLevel = progress.progressLevel;
+
+    progressWorld = progress.progressWorld;
+}
+
 
 // var isMobile = false;
 
-
+// Cookies.set('progress',{progessLevel:0,progressWorld:0});
 
 // gameGrid.style.width = "10px";
 
@@ -385,6 +402,8 @@ function addEventListeners(){
 
                     progressWorld++;
                     progressLevel = 0;
+
+                    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
 
                     game.win=false;
                     nextWorld();
