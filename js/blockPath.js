@@ -93,6 +93,10 @@ var game = {
     win: false,
 }
 
+var progressLevel =  0;
+
+var progressWorld = 0;
+
 // var isMobile = false;
 
 
@@ -282,7 +286,22 @@ function renderLevelButtons(){
         
         for(o=0;o<5;o++){
             el=document.createElement("div");
-            el.className = "level-button";
+
+            if(currentWorld>progressWorld){
+                el.className = el.className = "level-button level-locked";
+            }
+            else if(progressWorld==currentWorld){
+                if(levelCounter-1>progressLevel){
+                    el.className = el.className = "level-button level-locked";
+                }
+                else{
+                    el.className = "level-button";
+                }
+            }
+            else{
+                el.className = "level-button";
+            }
+            
             el.style.height = gameLevelGrid.blockHeight+"px";
             el.style.width = gameLevelGrid.blockWidth+"px";
             el.style.margin = gameLevelGrid.blockMargin+"px";
@@ -364,6 +383,9 @@ function addEventListeners(){
 
                     console.log("finished world");
 
+                    progressWorld++;
+                    progressLevel = 0;
+
                     game.win=false;
                     nextWorld();
                     resetGrid();
@@ -389,7 +411,6 @@ function addEventListeners(){
 
     playButton.addEventListener("click", function(){
         displayLevelScreen();
-        event
     })
 
     previousWorldButton.addEventListener("click", function(){
@@ -621,11 +642,14 @@ function addLevelButtonEvents(){
     levelCounter = 0;
 
     for(i=0; i<levelButtons.length; i++){
-        levelButtons[i].addEventListener("click", function(event){
-            currentLevel = indexInClass(this);
-            levels[currentWorld][indexInClass(this)].generate();
-            displayGameGridScreen();
-        })
+        if(!hasClass(levelButtons[i],"level-locked")){
+            levelButtons[i].addEventListener("click", function(event){
+                currentLevel = indexInClass(this);
+                levels[currentWorld][indexInClass(this)].generate();
+                displayGameGridScreen();
+            })            
+        }
+
         levelCounter++;
     }
 }
@@ -650,6 +674,7 @@ displayMainMenu();
 
 
 // mainMenu.style.display = "none";
+// progressWorld=0;
 // displayLevelScreen();
 
 // displayGameGridScreen();

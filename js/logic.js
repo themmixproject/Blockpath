@@ -80,6 +80,7 @@ function checkIndex(index){
 function nextLevel(){
     resetGrid();
     currentLevel+=1;
+    progressLevel++;
     levels[currentWorld][currentLevel].generate();
     displayGameGridScreen();
 }

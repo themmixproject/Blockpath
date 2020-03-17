@@ -256,6 +256,10 @@ div{
     position: relative;
 }
 
+.level-locked{
+    background-color: lightslategray;
+}
+
 .level-text{
     position: absolute;
     left:50%;
