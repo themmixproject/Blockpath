@@ -137,9 +137,6 @@ function hasClass(element, elementClass){
     if(element!=null){
             return (" " + element.className + " ").replace(/[\n\t]/g, " ").indexOf(className) > -1;
     }
-    else{
-        console.log("Error: no element input");
-    }
 
 }
 
@@ -615,9 +612,9 @@ displayMainMenu();
 
 // displayLevelScreen();
 
-
-// displayGameGridScreen();
-
+currentLevel = 34;
+displayGameGridScreen();
+levels[0][34].generate();
 // currentLevel = 3;
 // levels[0][3].generate();
 
