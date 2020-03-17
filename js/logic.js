@@ -80,8 +80,14 @@ function checkIndex(index){
 function nextLevel(){
     resetGrid();
     currentLevel+=1;
-    progressLevel++;
-    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+
+    if(currentWorld==progressWorld){
+        if(progressLevel-currentLevel==-1){
+            progressLevel++;
+            Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+        }
+    }
+
     levels[currentWorld][currentLevel].generate();
     displayGameGridScreen();
 }

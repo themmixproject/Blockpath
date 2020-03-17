@@ -95,8 +95,8 @@ var game = {
 
 console.log(Cookies.get("progress"));
 
-    var progressLevel = 0;
-    var progressWorld = 0;
+    var progressLevel;
+    var progressWorld;
 
 if(Cookies.get("progress") == undefined || Cookies.get("progress") == null){
     progressLevel =  0;
@@ -301,6 +301,8 @@ function renderLevelButtons(){
         row = document.createElement("div");
         row.className = "grid-row";
         
+        console.log("current: " + currentWorld + " progress: " + progressWorld);
+
         for(o=0;o<5;o++){
             el=document.createElement("div");
 
@@ -308,9 +310,14 @@ function renderLevelButtons(){
                 el.className = el.className = "level-button level-locked";
             }
             else if(progressWorld==currentWorld){
-                if(levelCounter-1>progressLevel){
+                if(progressLevel==0 && levelCounter-1==0){
+                    el.className = "level-button";
+                }
+                
+                else if(levelCounter-1>progressLevel){
                     el.className = el.className = "level-button level-locked";
                 }
+                
                 else{
                     el.className = "level-button";
                 }
@@ -400,10 +407,13 @@ function addEventListeners(){
 
                     console.log("finished world");
 
-                    progressWorld++;
-                    progressLevel = 0;
+                    if(progressWorld<=currentWorld){
+                        progressWorld++;
+                        progressLevel = 0;
+                        Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+                    }
 
-                    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+                    
 
                     game.win=false;
                     nextWorld();
@@ -696,10 +706,14 @@ displayMainMenu();
 // progressWorld=0;
 // displayLevelScreen();
 
+// currentWorld = 0;
+// currentLevel = 34;
+// progressWorld = 0;
+// progressLevel = 34;
 // displayGameGridScreen();
 
-// currentLevel = 0;
-// levels[0][0].generate();
+// currentLevel = 34;
+// levels[0][34].generate();
 
 
 
