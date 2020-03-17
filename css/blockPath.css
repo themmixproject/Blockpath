@@ -1,6 +1,6 @@
-body, html, div{
+/* body, html, div{
     touch-action: none;
-}
+} */
 body{
     background-color:white;
     font-family: Arial, Helvetica, sans-serif;
@@ -17,7 +17,7 @@ div{
           user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome and Opera */
 }
-
+/* 
 #prevent-touch-overlay{
     position: absolute;
     width: 100%;
@@ -27,7 +27,7 @@ div{
     right: 0;
     bottom: 0;
     touch-action: none;
-}
+} */
 
 #game-grid-screen{
     position: absolute;
@@ -35,8 +35,6 @@ div{
     top:50%;
     transform: translate(-50%,-50%);
     overflow: hidden;
-    touch-action: none;
-
 }
 
 #game-grid-header{
@@ -83,12 +81,8 @@ div{
 }
 */
 .grid-block{
-    /* height:100px;
-    width:100px; */
-    background-color:lightgray;
-    float:left;
-    /* margin:5px; */
-    /*display: inline-block;*/
+    background-color: lightgray;
+    float: left;
 }
 .grid-block-red{
     height:100px;
@@ -203,7 +197,6 @@ div{
     top:50%;
     transform: translate(-50%,-50%);
     overflow: hidden;
-    touch-action: none;
     display: none;
     text-align: center;
     font-size: 0px;
@@ -280,7 +273,7 @@ div{
     font-size: 20px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+/* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
     html {
       transform: rotate(-90deg);
       transform-origin: left top;
@@ -290,4 +283,4 @@ div{
       top: 100%;
       left: 0;
     }
-  }
+  } */
