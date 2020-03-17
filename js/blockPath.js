@@ -396,7 +396,7 @@ function alertScreenEvent(){
 
                 console.log("finished world");
 
-                if(progressWorld<=currentWorld){
+                if(progressWorld<=currentWorld && progressWorld < levels.length-1){
                     progressWorld++;
                     progressLevel = 0;
                     Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
@@ -605,50 +605,19 @@ function addLevelButtonEvents(){
  *| 6. Initialization                                  #
  *|                                                    # 
 \#####################################################*/
-// drawGrid();
-// if(isMobile == true){
-//  addMobileEventListeners();
-// }
-// else{
-//     addEventListeners();
-// }
 
 addEventListeners();
 
 displayMainMenu();
 
 
-
 // mainMenu.style.display = "none";
-// progressWorld=0;
+
 // displayLevelScreen();
 
-// currentWorld = 0;
-// currentLevel = 34;
-// progressWorld = 0;
-// progressLevel = 34;
+
 // displayGameGridScreen();
 
-// currentLevel = 34;
-// levels[0][34].generate();
+// currentLevel = 3;
+// levels[0][3].generate();
 
-
-
-// levels.push(
-//     new level(3,3,0,2,[4]),
-//     new level(7,4,0,4,[10,14,22,23,27]),
-//     new level(8,6,1,0,[10,19, 28, 30, 36, 37, 45]),
-//     new level(6,5,0,0,[8,13,11,28]),
-//     new level(7 ,5, 0,0,[1,2,3,10,17,22]),
-//     new level(8,6,4,4,[11,13,14,19,27,29,46,47])
-// )
-
-// levels[currentLevel].generate();
-
-// console.log(levels[levels.length-1][levels[levels.length-1].length-1])
-
-// levels[levels.length-1][levels[levels.length-1].length-1].generate();
-
-// levels[currentLevel].generate();
-// drawTestPath();
-// drawRedBlock();
