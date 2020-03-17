@@ -93,10 +93,8 @@ var game = {
     win: false,
 }
 
-console.log(Cookies.get("progress"));
-
-    var progressLevel;
-    var progressWorld;
+var progressLevel;
+var progressWorld;
 
 if(Cookies.get("progress") == undefined || Cookies.get("progress") == null){
     progressLevel =  0;
@@ -380,10 +378,58 @@ function displayLevelScreen(){
     gameLevelScreen.style.display = "block";
 }
 
+/*#####################################################\
+ *|                                                    #
+ *| 4. event functions                                 #
+ *|                                                    # 
+\#####################################################*/
+
+
+function alertScreenEvent(){
+    if(
+        gameAlertScreen.style.display!="none" && 
+        gameAlertScreen.style.display!=""
+    ){
+        if( game.win == true ){
+            console.log("finished level");
+            if(currentLevel == levels[currentWorld].length-1){
+
+                console.log("finished world");
+
+                if(progressWorld<=currentWorld){
+                    progressWorld++;
+                    progressLevel = 0;
+                    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
+                }
+
+                game.win=false;
+                nextWorld();
+                resetGrid();
+                displayLevelScreen();
+            }
+            else if( game.end == true ){
+                console.log("finished game");
+                resetGame();
+                displayLevelScreen();
+            }
+            else{
+                game.win = false;
+                nextLevel();
+            }
+            
+        }
+
+        else{
+            displayGameGridScreen();
+        }
+    }
+}
+
+
 
 /*#####################################################\
  *|                                                    #
- *| 4. event listeners                                 #
+ *| 5. event listeners                                 #
  *|                                                    # 
 \#####################################################*/
 
@@ -397,45 +443,7 @@ function addEventListeners(){
     });
 
     gameAlertScreen.addEventListener("click", function(){
-        if(
-            gameAlertScreen.style.display!="none" && 
-            gameAlertScreen.style.display!=""
-        ){
-            if( game.win == true ){
-                console.log("finished level");
-                if(currentLevel == levels[currentWorld].length-1){
-
-                    console.log("finished world");
-
-                    if(progressWorld<=currentWorld){
-                        progressWorld++;
-                        progressLevel = 0;
-                        Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}));
-                    }
-
-                    
-
-                    game.win=false;
-                    nextWorld();
-                    resetGrid();
-                    displayLevelScreen();
-                }
-                else if( game.end == true ){
-                    console.log("finished game");
-                    resetGame();
-                    displayLevelScreen();
-                }
-                else{
-                    game.win = false;
-                    nextLevel();
-                }
-                
-            }
-
-            else{
-                displayGameGridScreen();
-            }
-        }
+        alertScreenEvent();
     });
 
     playButton.addEventListener("click", function(){
@@ -455,7 +463,7 @@ function addEventListeners(){
     });
 
     // 
-    // MOBILE SHIT
+    // MOBILE EVENTS
     // 
 
     console.log("mobile events added");
@@ -467,35 +475,7 @@ function addEventListeners(){
     });
 
     gameAlertScreen.addEventListener("touchstart", function(event){
-        if(
-            gameAlertScreen.style.display!="none" && 
-            gameAlertScreen.style.display!=""
-        ){
-            if( game.win == true ){
-                console.log("finished level");
-                if(currentLevel == levels[currentWorld].length-1){
-
-                    console.log("finished world");
-
-                    game.win=false;
-                    nextWorld();
-                    resetGrid();
-                    displayLevelScreen();
-                }
-                else if( game.end == true ){
-                    console.log("finished game");
-                    resetGame();
-                    displayLevelScreen();
-                }
-                else{
-                    game.win = false;
-                    nextLevel();
-                }
-            }
-            else{
-                displayGameGridScreen();
-            }
-        }
+        alertScreenEvent();
         event.preventDefault();
     });
 
@@ -551,7 +531,7 @@ function addEventListeners(){
 
 function addGridEvents(gridWidth){
 
-    // console.log("add grid events!");
+    console.log("add grid events!");
 
     pathBlocks = document.getElementsByClassName("path");
 
@@ -572,9 +552,7 @@ function addGridEvents(gridWidth){
         });  
     }
 
-    // MOBILE SHIT
-
-    console.log("add grid (path) events!");
+    // MOBILE EVENTS
 
     pathBlocks = document.getElementsByClassName("path");
 
@@ -586,67 +564,6 @@ function addGridEvents(gridWidth){
         })
     }
 }
-
-// function addMobileEventListeners(gridWidth){
-//     console.log("mobile events added");
-
-//     document.addEventListener("touchstart", function(event){
-//         console.log("hello world!");
-//         setMouseDown(false);
-//     });
-
-//     gameAlertScreen.addEventListener("touchstart", function(){
-//         if(
-//             gameAlertScreen.style.display!="none" && 
-//             gameAlertScreen.style.display!=""
-//         ){
-//             if( game.win == true ){
-//                 nextLevel();
-//                 game.win = false;
-//             }
-//             // else if( game.end == true ){
-//             //     resetGame();
-//             //     displayMainMenu();
-//             // }
-
-//         }
-//     });
-
-//     playButton.addEventListener("touchstart", function(){
-//         // levels[currentLevel].generate();
-//         // displayGameGridScreen(gridWidth);
-//         // displayAlert("drag the path to fill the grid!");
-//         displayLevelScreen();
-//     })
-
-//     /**
-//      * grid events are added here as well
-//      */
-
-//     gameGrid.addEventListener("touchmove", function(event){
-//         element = document.elementFromPoint(
-//             event.touches[0].clientX,
-//             event.touches[0].clientY
-//         )
-//         if(hasClass(element,"grid-block")){
-//             checkDrawPath(element);
-//         }
-//         event.preventDefault();
-    
-//     })
-
-//     document.addEventListener("touchmove",function(){
-//         element = document.elementFromPoint(
-//             event.touches[0].clientX,
-//             event.touches[0].clientY
-//         );
-//         if(hasClass(element,"path")){
-//             pathMouseDown(element);
-//         }
-//         event.preventDefault();
-//     });
-
-// }
 
 function bindNewPath(element){
     if(isMobile==true){
@@ -685,7 +602,7 @@ function addLevelButtonEvents(){
 
 /*#####################################################\
  *|                                                    #
- *| 5. Initialization                                  #
+ *| 6. Initialization                                  #
  *|                                                    # 
 \#####################################################*/
 // drawGrid();
