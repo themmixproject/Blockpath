@@ -83,16 +83,19 @@ div{
 .grid-block{
     background-color: lightgray;
     float: left;
+    touch-action:none;
 }
 .grid-block-red{
     height:100px;
     width:100px;
     background-color:rgb(255, 112, 112);
+    touch-action:none;
 }
 .path{
     height:100px;
     width:100px;
     background-color:rgb(89, 194, 255);
+    touch-action:none;
 }
 
 .path.bottom{
@@ -141,6 +144,7 @@ div{
     text-align:center;
     font-size:25px;
     color:black;
+    touch-action:none;
 }
 
 .menu-option:hover{
@@ -159,6 +163,7 @@ div{
     /* background-color: rgba(0,0,0,0.5); Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     /* cursor: pointer; Add a pointer on hover */
+    touch-action:none;
 }
 
 
@@ -258,6 +263,7 @@ div{
     /* margin: 2px; */
     background-color:rgb(89, 194, 255);
     position: relative;
+    touch-action:none;
 }
 
 .level-locked{
