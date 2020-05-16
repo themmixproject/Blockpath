@@ -612,16 +612,16 @@ function addLevelButtonEvents(){
 
 addEventListeners();
 
-displayMainMenu();
+// displayMainMenu();
 
 
 // mainMenu.style.display = "none";
 
 // displayLevelScreen();
 
-// currentLevel = 34;
-// displayGameGridScreen();
-// levels[0][34].generate();
+currentLevel = 34;
+displayGameGridScreen();
+levels[1][4].generate();
 // currentLevel = 3;
 // levels[0][3].generate();
 
