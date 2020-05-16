@@ -100,7 +100,11 @@ if(Cookies.get("progress") == undefined || Cookies.get("progress") == null){
     progressLevel =  0;
     progressWorld = 0;
 
-    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel},{expires:7}));
+    Cookies.set(
+        "progress",
+        JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}),
+        {expires:7}
+    );
 
 }
 else{
@@ -113,8 +117,6 @@ else{
 
 
 // var isMobile = false;
-
-// Cookies.set('progress',{progessLevel:0,progressWorld:0});
 
 // gameGrid.style.width = "10px";
 
@@ -396,7 +398,11 @@ function alertScreenEvent(){
                 if(progressWorld<=currentWorld && progressWorld < levels.length-1){
                     progressWorld++;
                     progressLevel = 0;
-                    Cookies.set("progress",JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel},{expires:7}));
+                    Cookies.set(
+                        "progress",
+                        JSON.stringify({progressWorld:progressWorld,progressLevel:progressLevel}),
+                        {expires:7}
+                    );
                 }
 
                 game.win=false;
@@ -612,16 +618,15 @@ function addLevelButtonEvents(){
 
 addEventListeners();
 
-// displayMainMenu();
-
+displayMainMenu();
 
 // mainMenu.style.display = "none";
 
 // displayLevelScreen();
 
-currentLevel = 34;
-displayGameGridScreen();
-levels[1][4].generate();
+// currentLevel = 34;
+// displayGameGridScreen();
+// levels[1][4].generate();
 // currentLevel = 3;
 // levels[0][3].generate();
 
